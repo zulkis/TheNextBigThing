@@ -3,7 +3,7 @@
 //  TheNextBigThing
 //
 //  Created by Alexey Minaev on 12/12/14.
-//  Copyright (c) 2014 IttiBitty. All rights reserved.
+//  Copyright (c) 2014 IttyBitty. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
