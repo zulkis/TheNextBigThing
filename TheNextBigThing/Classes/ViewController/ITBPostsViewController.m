@@ -1,18 +1,18 @@
 //
-//  ViewController.m
+//  ITBPostsViewController.m
 //  TheNextBigThing
 //
 //  Created by Alexey Minaev on 12/12/14.
 //  Copyright (c) 2014 IttiBitty. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "ITBPostsViewController.h"
 
-@interface ViewController ()
+@interface ITBPostsViewController ()
 
 @end
 
-@implementation ViewController
+@implementation ITBPostsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

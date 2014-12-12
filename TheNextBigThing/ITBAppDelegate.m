@@ -1,18 +1,18 @@
 //
-//  AppDelegate.m
+//  ITBAppDelegate.m
 //  TheNextBigThing
 //
 //  Created by Alexey Minaev on 12/12/14.
 //  Copyright (c) 2014 IttiBitty. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "ITBAppDelegate.h"
 
-@interface AppDelegate ()
+@interface ITBAppDelegate ()
 
 @end
 
-@implementation AppDelegate
+@implementation ITBAppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {

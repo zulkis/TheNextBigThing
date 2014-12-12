@@ -1,5 +1,5 @@
 //
-//  AppDelegate.h
+//  ITBAppDelegate.h
 //  TheNextBigThing
 //
 //  Created by Alexey Minaev on 12/12/14.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface ITBAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

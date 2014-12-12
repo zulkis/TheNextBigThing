@@ -1,0 +1,21 @@
+//
+//  thenextbigthing-Prefix.pch
+//  TheNextBigThing
+//
+//  Created by Alexey Minaev on 12/12/14.
+//  Copyright (c) 2014 IttiBitty. All rights reserved.
+//
+
+#ifndef TheNextBigThing_thenextbigthing_Prefix_pch
+#define TheNextBigThing_thenextbigthing_Prefix_pch
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
+
+#import "ITBMacroses.h"
+
+#endif
+
+#endif

@@ -8,12 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		13D8D33B1A3B2E1A00820CEC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D33A1A3B2E1A00820CEC /* main.m */; };
-		13D8D33E1A3B2E1A00820CEC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D33D1A3B2E1A00820CEC /* AppDelegate.m */; };
-		13D8D3411A3B2E1A00820CEC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3401A3B2E1A00820CEC /* ViewController.m */; };
+		13D8D33E1A3B2E1A00820CEC /* ITBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D33D1A3B2E1A00820CEC /* ITBAppDelegate.m */; };
 		13D8D3441A3B2E1A00820CEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13D8D3421A3B2E1A00820CEC /* Main.storyboard */; };
 		13D8D3461A3B2E1A00820CEC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13D8D3451A3B2E1A00820CEC /* Images.xcassets */; };
 		13D8D3491A3B2E1A00820CEC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13D8D3471A3B2E1A00820CEC /* LaunchScreen.xib */; };
 		13D8D3551A3B2E1A00820CEC /* TheNextBigThingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3541A3B2E1A00820CEC /* TheNextBigThingTests.m */; };
+		13D8D36A1A3B2E9400820CEC /* NSManagedObjectContext+Saving.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3611A3B2E9400820CEC /* NSManagedObjectContext+Saving.m */; };
+		13D8D36B1A3B2E9400820CEC /* ITBStorageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3651A3B2E9400820CEC /* ITBStorageManager.m */; };
+		13D8D36C1A3B2E9400820CEC /* ITBPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3681A3B2E9400820CEC /* ITBPostsViewController.m */; };
+		13D8D3701A3B304300820CEC /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13D8D36F1A3B304300820CEC /* CoreData.framework */; };
+		13D8D3741A3B319400820CEC /* storage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3721A3B319400820CEC /* storage.xcdatamodeld */; };
+		13D8D37D1A3B334D00820CEC /* ITBPostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D37C1A3B334D00820CEC /* ITBPostTableViewCell.m */; };
+		13D8D3821A3B3E4000820CEC /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3811A3B3E4000820CEC /* User.m */; };
+		13D8D3851A3B3E4000820CEC /* ITBMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3841A3B3E4000820CEC /* ITBMessage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,16 +37,30 @@
 		13D8D3351A3B2E1A00820CEC /* TheNextBigThing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheNextBigThing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13D8D3391A3B2E1A00820CEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13D8D33A1A3B2E1A00820CEC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		13D8D33C1A3B2E1A00820CEC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		13D8D33D1A3B2E1A00820CEC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		13D8D33F1A3B2E1A00820CEC /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		13D8D3401A3B2E1A00820CEC /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		13D8D33C1A3B2E1A00820CEC /* ITBAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ITBAppDelegate.h; sourceTree = "<group>"; };
+		13D8D33D1A3B2E1A00820CEC /* ITBAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ITBAppDelegate.m; sourceTree = "<group>"; };
 		13D8D3431A3B2E1A00820CEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		13D8D3451A3B2E1A00820CEC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		13D8D3481A3B2E1A00820CEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		13D8D34E1A3B2E1A00820CEC /* TheNextBigThingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TheNextBigThingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		13D8D3531A3B2E1A00820CEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13D8D3541A3B2E1A00820CEC /* TheNextBigThingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TheNextBigThingTests.m; sourceTree = "<group>"; };
+		13D8D3601A3B2E9400820CEC /* NSManagedObjectContext+Saving.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+Saving.h"; sourceTree = "<group>"; };
+		13D8D3611A3B2E9400820CEC /* NSManagedObjectContext+Saving.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+Saving.m"; sourceTree = "<group>"; };
+		13D8D3641A3B2E9400820CEC /* ITBStorageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITBStorageManager.h; sourceTree = "<group>"; };
+		13D8D3651A3B2E9400820CEC /* ITBStorageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITBStorageManager.m; sourceTree = "<group>"; };
+		13D8D3671A3B2E9400820CEC /* ITBPostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITBPostsViewController.h; sourceTree = "<group>"; };
+		13D8D3681A3B2E9400820CEC /* ITBPostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITBPostsViewController.m; sourceTree = "<group>"; };
+		13D8D36D1A3B2FA600820CEC /* ITBMacroses.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ITBMacroses.h; path = SupportingFiles/ITBMacroses.h; sourceTree = "<group>"; };
+		13D8D36E1A3B300E00820CEC /* thenextbigthing-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "thenextbigthing-Prefix.pch"; path = "SupportingFiles/thenextbigthing-Prefix.pch"; sourceTree = "<group>"; };
+		13D8D36F1A3B304300820CEC /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		13D8D3731A3B319400820CEC /* storage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = storage.xcdatamodel; sourceTree = "<group>"; };
+		13D8D37B1A3B334D00820CEC /* ITBPostTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITBPostTableViewCell.h; sourceTree = "<group>"; };
+		13D8D37C1A3B334D00820CEC /* ITBPostTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITBPostTableViewCell.m; sourceTree = "<group>"; };
+		13D8D3801A3B3E4000820CEC /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = TheNextBigThing/Classes/Model/Entities/User.h; sourceTree = SOURCE_ROOT; };
+		13D8D3811A3B3E4000820CEC /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = TheNextBigThing/Classes/Model/Entities/User.m; sourceTree = SOURCE_ROOT; };
+		13D8D3831A3B3E4000820CEC /* ITBMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ITBMessage.h; path = TheNextBigThing/Classes/Model/Entities/ITBMessage.h; sourceTree = SOURCE_ROOT; };
+		13D8D3841A3B3E4000820CEC /* ITBMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ITBMessage.m; path = TheNextBigThing/Classes/Model/Entities/ITBMessage.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13D8D3701A3B304300820CEC /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,6 +88,7 @@
 				13D8D3371A3B2E1A00820CEC /* TheNextBigThing */,
 				13D8D3511A3B2E1A00820CEC /* TheNextBigThingTests */,
 				13D8D3361A3B2E1A00820CEC /* Products */,
+				13D8D3711A3B304900820CEC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -81,10 +104,9 @@
 		13D8D3371A3B2E1A00820CEC /* TheNextBigThing */ = {
 			isa = PBXGroup;
 			children = (
-				13D8D33C1A3B2E1A00820CEC /* AppDelegate.h */,
-				13D8D33D1A3B2E1A00820CEC /* AppDelegate.m */,
-				13D8D33F1A3B2E1A00820CEC /* ViewController.h */,
-				13D8D3401A3B2E1A00820CEC /* ViewController.m */,
+				13D8D35E1A3B2E9400820CEC /* Classes */,
+				13D8D33C1A3B2E1A00820CEC /* ITBAppDelegate.h */,
+				13D8D33D1A3B2E1A00820CEC /* ITBAppDelegate.m */,
 				13D8D3421A3B2E1A00820CEC /* Main.storyboard */,
 				13D8D3451A3B2E1A00820CEC /* Images.xcassets */,
 				13D8D3471A3B2E1A00820CEC /* LaunchScreen.xib */,
@@ -98,6 +120,8 @@
 			children = (
 				13D8D3391A3B2E1A00820CEC /* Info.plist */,
 				13D8D33A1A3B2E1A00820CEC /* main.m */,
+				13D8D36D1A3B2FA600820CEC /* ITBMacroses.h */,
+				13D8D36E1A3B300E00820CEC /* thenextbigthing-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -117,6 +141,82 @@
 				13D8D3531A3B2E1A00820CEC /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		13D8D35E1A3B2E9400820CEC /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				13D8D35F1A3B2E9400820CEC /* Categories */,
+				13D8D3621A3B2E9400820CEC /* Model */,
+				13D8D3661A3B2E9400820CEC /* ViewController */,
+				13D8D3761A3B32FC00820CEC /* View */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		13D8D35F1A3B2E9400820CEC /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				13D8D3601A3B2E9400820CEC /* NSManagedObjectContext+Saving.h */,
+				13D8D3611A3B2E9400820CEC /* NSManagedObjectContext+Saving.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		13D8D3621A3B2E9400820CEC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				13D8D3751A3B32CD00820CEC /* Entities */,
+				13D8D3631A3B2E9400820CEC /* CoreDataStorage */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		13D8D3631A3B2E9400820CEC /* CoreDataStorage */ = {
+			isa = PBXGroup;
+			children = (
+				13D8D3721A3B319400820CEC /* storage.xcdatamodeld */,
+				13D8D3641A3B2E9400820CEC /* ITBStorageManager.h */,
+				13D8D3651A3B2E9400820CEC /* ITBStorageManager.m */,
+			);
+			path = CoreDataStorage;
+			sourceTree = "<group>";
+		};
+		13D8D3661A3B2E9400820CEC /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				13D8D3671A3B2E9400820CEC /* ITBPostsViewController.h */,
+				13D8D3681A3B2E9400820CEC /* ITBPostsViewController.m */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		13D8D3711A3B304900820CEC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				13D8D36F1A3B304300820CEC /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		13D8D3751A3B32CD00820CEC /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				13D8D3831A3B3E4000820CEC /* ITBMessage.h */,
+				13D8D3841A3B3E4000820CEC /* ITBMessage.m */,
+				13D8D3801A3B3E4000820CEC /* User.h */,
+				13D8D3811A3B3E4000820CEC /* User.m */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		13D8D3761A3B32FC00820CEC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				13D8D37B1A3B334D00820CEC /* ITBPostTableViewCell.h */,
+				13D8D37C1A3B334D00820CEC /* ITBPostTableViewCell.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,6 +263,7 @@
 		13D8D32D1A3B2E1A00820CEC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = ITB;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = IttiBitty;
 				TargetAttributes = {
@@ -219,9 +320,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13D8D3411A3B2E1A00820CEC /* ViewController.m in Sources */,
-				13D8D33E1A3B2E1A00820CEC /* AppDelegate.m in Sources */,
+				13D8D36C1A3B2E9400820CEC /* ITBPostsViewController.m in Sources */,
+				13D8D3851A3B3E4000820CEC /* ITBMessage.m in Sources */,
+				13D8D37D1A3B334D00820CEC /* ITBPostTableViewCell.m in Sources */,
+				13D8D3821A3B3E4000820CEC /* User.m in Sources */,
+				13D8D3741A3B319400820CEC /* storage.xcdatamodeld in Sources */,
+				13D8D36B1A3B2E9400820CEC /* ITBStorageManager.m in Sources */,
+				13D8D33E1A3B2E1A00820CEC /* ITBAppDelegate.m in Sources */,
 				13D8D33B1A3B2E1A00820CEC /* main.m in Sources */,
+				13D8D36A1A3B2E9400820CEC /* NSManagedObjectContext+Saving.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,6 +450,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = "TheNextBigThing/SupportingFiles/thenextbigthing-Prefix.pch";
 				INFOPLIST_FILE = TheNextBigThing/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -353,6 +461,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = "TheNextBigThing/SupportingFiles/thenextbigthing-Prefix.pch";
 				INFOPLIST_FILE = TheNextBigThing/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -422,6 +531,19 @@
 			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		13D8D3721A3B319400820CEC /* storage.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				13D8D3731A3B319400820CEC /* storage.xcdatamodel */,
+			);
+			currentVersion = 13D8D3731A3B319400820CEC /* storage.xcdatamodel */;
+			path = storage.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 13D8D32D1A3B2E1A00820CEC /* Project object */;
 }

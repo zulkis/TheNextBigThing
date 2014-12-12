@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  ITBPostsViewController.h
 //  TheNextBigThing
 //
 //  Created by Alexey Minaev on 12/12/14.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface ITBPostsViewController : UIViewController
 
 
 @end
