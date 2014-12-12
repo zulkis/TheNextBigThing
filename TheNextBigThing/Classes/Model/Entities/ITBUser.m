@@ -1,21 +1,21 @@
 //
-//  User.m
+//  ITBUser.m
 //  TheNextBigThing
 //
 //  Created by Alexey Minaev on 12/12/14.
 //  Copyright (c) 2014 IttyBitty. All rights reserved.
 //
 
-#import "User.h"
+#import "ITBUser.h"
 #import "ITBMessage.h"
 
 
-@implementation User
+@implementation ITBUser
 
 @dynamic username;
 @dynamic fullname;
-@dynamic avatarImage;
-@dynamic identifier;
+@dynamic avatarImageUrl;
+
 @dynamic messages;
 
 @end

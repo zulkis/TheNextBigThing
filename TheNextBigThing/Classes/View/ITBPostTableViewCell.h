@@ -10,4 +10,6 @@
 
 @interface ITBPostTableViewCell : UITableViewCell
 
+@property (nonatomic, weak) IBOutlet UITextView *textView;
+
 @end

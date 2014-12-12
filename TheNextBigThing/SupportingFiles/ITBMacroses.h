@@ -11,6 +11,28 @@
 
 
 /*
+ * Prefix
+ */
+
+static inline NSString *projectPrefix() {
+    static dispatch_once_t onceToken;
+    static NSString *projectPrefix = nil;
+    dispatch_once(&onceToken, ^{
+        NSString *str = NSStringFromClass([[UIApplication sharedApplication].delegate class]);
+        for (NSUInteger i = 0; i < str.length; i++) {
+            unichar c = [str characterAtIndex:i];
+            if (c < 'A' || c > 'Z') { //if c is not a capital we're at prefix end (+1 extra)
+                projectPrefix =[str substringWithRange:NSMakeRange(0, i - 1)];
+                break;
+            }
+        }
+    });
+    return projectPrefix;
+}
+
+#define PROJECT_PREFIX projectPrefix()
+
+/*
  * localization
  */
 

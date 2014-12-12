@@ -12,6 +12,8 @@
 
 @interface ITBStorageManager : NSObject
 
++ (instancetype)sharedInstance;
+
 @property (nonatomic, strong, readonly) NSManagedObjectContext *mainThreadContext;
 
 - (NSManagedObjectContext *)privateContext;

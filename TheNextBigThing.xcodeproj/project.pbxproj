@@ -19,8 +19,13 @@
 		13D8D3701A3B304300820CEC /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13D8D36F1A3B304300820CEC /* CoreData.framework */; };
 		13D8D3741A3B319400820CEC /* storage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3721A3B319400820CEC /* storage.xcdatamodeld */; };
 		13D8D37D1A3B334D00820CEC /* ITBPostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D37C1A3B334D00820CEC /* ITBPostTableViewCell.m */; };
-		13D8D3821A3B3E4000820CEC /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3811A3B3E4000820CEC /* User.m */; };
+		13D8D3821A3B3E4000820CEC /* ITBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3811A3B3E4000820CEC /* ITBUser.m */; };
 		13D8D3851A3B3E4000820CEC /* ITBMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3841A3B3E4000820CEC /* ITBMessage.m */; };
+		13D8D3891A3B4BDA00820CEC /* ITBPostsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3881A3B4BDA00820CEC /* ITBPostsDataSource.m */; };
+		13D8D38C1A3B4C4200820CEC /* ITBBaseEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D38B1A3B4C4200820CEC /* ITBBaseEntity.m */; };
+		13D8D3901A3B4CD000820CEC /* ITBBaseEntity+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D38F1A3B4CD000820CEC /* ITBBaseEntity+Extension.m */; };
+		13D8D3931A3B4D6F00820CEC /* ITBMessage+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3921A3B4D6F00820CEC /* ITBMessage+Extension.m */; };
+		13D8D3961A3B4D7F00820CEC /* ITBUser+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3951A3B4D7F00820CEC /* ITBUser+Extension.m */; };
 		309BE7A6FB2B72CA4C756AD8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 328D68BC640369FC6FAC5F52 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -58,10 +63,20 @@
 		13D8D3731A3B319400820CEC /* storage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = storage.xcdatamodel; sourceTree = "<group>"; };
 		13D8D37B1A3B334D00820CEC /* ITBPostTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITBPostTableViewCell.h; sourceTree = "<group>"; };
 		13D8D37C1A3B334D00820CEC /* ITBPostTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITBPostTableViewCell.m; sourceTree = "<group>"; };
-		13D8D3801A3B3E4000820CEC /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = TheNextBigThing/Classes/Model/Entities/User.h; sourceTree = SOURCE_ROOT; };
-		13D8D3811A3B3E4000820CEC /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = TheNextBigThing/Classes/Model/Entities/User.m; sourceTree = SOURCE_ROOT; };
+		13D8D3801A3B3E4000820CEC /* ITBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ITBUser.h; path = TheNextBigThing/Classes/Model/Entities/ITBUser.h; sourceTree = SOURCE_ROOT; };
+		13D8D3811A3B3E4000820CEC /* ITBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ITBUser.m; path = TheNextBigThing/Classes/Model/Entities/ITBUser.m; sourceTree = SOURCE_ROOT; };
 		13D8D3831A3B3E4000820CEC /* ITBMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ITBMessage.h; path = TheNextBigThing/Classes/Model/Entities/ITBMessage.h; sourceTree = SOURCE_ROOT; };
 		13D8D3841A3B3E4000820CEC /* ITBMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ITBMessage.m; path = TheNextBigThing/Classes/Model/Entities/ITBMessage.m; sourceTree = SOURCE_ROOT; };
+		13D8D3871A3B4BDA00820CEC /* ITBPostsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITBPostsDataSource.h; sourceTree = "<group>"; };
+		13D8D3881A3B4BDA00820CEC /* ITBPostsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITBPostsDataSource.m; sourceTree = "<group>"; };
+		13D8D38A1A3B4C4200820CEC /* ITBBaseEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITBBaseEntity.h; sourceTree = "<group>"; };
+		13D8D38B1A3B4C4200820CEC /* ITBBaseEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITBBaseEntity.m; sourceTree = "<group>"; };
+		13D8D38E1A3B4CD000820CEC /* ITBBaseEntity+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ITBBaseEntity+Extension.h"; sourceTree = "<group>"; };
+		13D8D38F1A3B4CD000820CEC /* ITBBaseEntity+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ITBBaseEntity+Extension.m"; sourceTree = "<group>"; };
+		13D8D3911A3B4D6F00820CEC /* ITBMessage+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ITBMessage+Extension.h"; sourceTree = "<group>"; };
+		13D8D3921A3B4D6F00820CEC /* ITBMessage+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ITBMessage+Extension.m"; sourceTree = "<group>"; };
+		13D8D3941A3B4D7F00820CEC /* ITBUser+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ITBUser+Extension.h"; sourceTree = "<group>"; };
+		13D8D3951A3B4D7F00820CEC /* ITBUser+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ITBUser+Extension.m"; sourceTree = "<group>"; };
 		1F4A471937C2E834E2E67967 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		328D68BC640369FC6FAC5F52 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6457DAD7455E9500BAAE24C8 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -172,6 +187,8 @@
 		13D8D3621A3B2E9400820CEC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				13D8D3861A3B4BCF00820CEC /* DataSource */,
+				13D8D38D1A3B4CBA00820CEC /* Entities+Category */,
 				13D8D3751A3B32CD00820CEC /* Entities */,
 				13D8D3631A3B2E9400820CEC /* CoreDataStorage */,
 			);
@@ -209,10 +226,12 @@
 		13D8D3751A3B32CD00820CEC /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				13D8D38A1A3B4C4200820CEC /* ITBBaseEntity.h */,
+				13D8D38B1A3B4C4200820CEC /* ITBBaseEntity.m */,
 				13D8D3831A3B3E4000820CEC /* ITBMessage.h */,
 				13D8D3841A3B3E4000820CEC /* ITBMessage.m */,
-				13D8D3801A3B3E4000820CEC /* User.h */,
-				13D8D3811A3B3E4000820CEC /* User.m */,
+				13D8D3801A3B3E4000820CEC /* ITBUser.h */,
+				13D8D3811A3B3E4000820CEC /* ITBUser.m */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -224,6 +243,28 @@
 				13D8D37C1A3B334D00820CEC /* ITBPostTableViewCell.m */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		13D8D3861A3B4BCF00820CEC /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				13D8D3871A3B4BDA00820CEC /* ITBPostsDataSource.h */,
+				13D8D3881A3B4BDA00820CEC /* ITBPostsDataSource.m */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
+		13D8D38D1A3B4CBA00820CEC /* Entities+Category */ = {
+			isa = PBXGroup;
+			children = (
+				13D8D38E1A3B4CD000820CEC /* ITBBaseEntity+Extension.h */,
+				13D8D38F1A3B4CD000820CEC /* ITBBaseEntity+Extension.m */,
+				13D8D3911A3B4D6F00820CEC /* ITBMessage+Extension.h */,
+				13D8D3921A3B4D6F00820CEC /* ITBMessage+Extension.m */,
+				13D8D3941A3B4D7F00820CEC /* ITBUser+Extension.h */,
+				13D8D3951A3B4D7F00820CEC /* ITBUser+Extension.m */,
+			);
+			path = "Entities+Category";
 			sourceTree = "<group>";
 		};
 		F35C3A32BC1A479BEFC3A981 /* Pods */ = {
@@ -372,11 +413,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				13D8D36C1A3B2E9400820CEC /* ITBPostsViewController.m in Sources */,
+				13D8D38C1A3B4C4200820CEC /* ITBBaseEntity.m in Sources */,
+				13D8D3961A3B4D7F00820CEC /* ITBUser+Extension.m in Sources */,
 				13D8D3851A3B3E4000820CEC /* ITBMessage.m in Sources */,
 				13D8D37D1A3B334D00820CEC /* ITBPostTableViewCell.m in Sources */,
-				13D8D3821A3B3E4000820CEC /* User.m in Sources */,
+				13D8D3821A3B3E4000820CEC /* ITBUser.m in Sources */,
 				13D8D3741A3B319400820CEC /* storage.xcdatamodeld in Sources */,
 				13D8D36B1A3B2E9400820CEC /* ITBStorageManager.m in Sources */,
+				13D8D3901A3B4CD000820CEC /* ITBBaseEntity+Extension.m in Sources */,
+				13D8D3891A3B4BDA00820CEC /* ITBPostsDataSource.m in Sources */,
+				13D8D3931A3B4D6F00820CEC /* ITBMessage+Extension.m in Sources */,
 				13D8D33E1A3B2E1A00820CEC /* ITBAppDelegate.m in Sources */,
 				13D8D33B1A3B2E1A00820CEC /* main.m in Sources */,
 				13D8D36A1A3B2E9400820CEC /* NSManagedObjectContext+Saving.m in Sources */,

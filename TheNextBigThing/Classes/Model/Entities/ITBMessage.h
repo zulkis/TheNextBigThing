@@ -6,16 +6,14 @@
 //  Copyright (c) 2014 IttyBitty. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
+#import "ITBBaseEntity+Extension.h"
 
-@class User;
+@class ITBUser;
 
-@interface ITBMessage : NSManagedObject
+@interface ITBMessage : ITBBaseEntity
 
 @property (nonatomic, retain) NSString * text;
-@property (nonatomic, retain) NSString * identifier;
 @property (nonatomic, retain) NSDate * createdAt;
-@property (nonatomic, retain) User *user;
+@property (nonatomic, retain) ITBUser *user;
 
 @end

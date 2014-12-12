@@ -1,5 +1,5 @@
 //
-//  ITBMessage.m
+//  ITBMessage+Extension.h
 //  TheNextBigThing
 //
 //  Created by Alexey Minaev on 12/12/14.
@@ -7,14 +7,7 @@
 //
 
 #import "ITBMessage.h"
-#import "ITBUser.h"
 
-
-@implementation ITBMessage
-
-@dynamic text;
-@dynamic identifier;
-@dynamic createdAt;
-@dynamic user;
+@interface ITBMessage (Extension)
 
 @end

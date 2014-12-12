@@ -2,31 +2,44 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="2xK-yM-th7">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Table View Controller-->
+        <!--Posts View Controller-->
         <scene sceneID="8c0-zA-zri">
             <objects>
-                <tableViewController id="2xK-yM-th7" sceneMemberID="viewController">
+                <tableViewController id="2xK-yM-th7" customClass="ITBPostsViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ek9-ER-HEt">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ITBPostTableViewCell" rowHeight="80" id="O6M-MZ-hbW">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ITBPostTableViewCell" rowHeight="80" id="O6M-MZ-hbW" customClass="ITBPostTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" horizontalHuggingPriority="251" tableViewCell="O6M-MZ-hbW" id="efu-y5-O9J">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" tableViewCell="O6M-MZ-hbW" id="efu-y5-O9J">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AvatarPlaceholdeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="QKW-Dl-x6R">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" verticalHuggingPriority="252" image="AvatarPlaceholdeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="QKW-Dl-x6R">
                                             <rect key="frame" x="8" y="8" width="64" height="64"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="64" id="7Xf-ip-zvl"/>
-                                                <constraint firstAttribute="height" constant="64" id="maS-Vw-egu"/>
+                                                <constraint firstAttribute="height" relation="lessThanOrEqual" constant="64" id="ETE-vm-Xe1"/>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="64" id="SRS-hB-Q0Y"/>
+                                                <constraint firstAttribute="width" secondItem="QKW-Dl-x6R" secondAttribute="height" multiplier="1:1" id="e1F-MW-top"/>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="64" id="eAj-Cz-xaI"/>
+                                                <constraint firstAttribute="height" relation="lessThanOrEqual" constant="64" id="maS-Vw-egu"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="SRS-hB-Q0Y"/>
+                                                    <exclude reference="eAj-Cz-xaI"/>
+                                                    <exclude reference="maS-Vw-egu"/>
+                                                </mask>
+                                            </variation>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Marco Arment" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XsB-YR-yTt">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="Marco Arment" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XsB-YR-yTt">
                                             <rect key="frame" x="80" y="8" width="105.5" height="19.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" id="lgG-Io-Iac"/>
@@ -35,13 +48,13 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@marcoarment" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xIq-58-JJ5">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="@marcoarment" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xIq-58-JJ5">
                                             <rect key="frame" x="193" y="8" width="90.5" height="19.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1h" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="99Y-I7-nya">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="1h" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="99Y-I7-nya">
                                             <rect key="frame" x="573" y="8" width="18.5" height="19.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="42" id="tXJ-IG-fPt"/>
@@ -55,16 +68,20 @@
                                                 </mask>
                                             </variation>
                                         </label>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MnS-NR-xfc">
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MnS-NR-xfc">
                                             <rect key="frame" x="80" y="32" width="512" height="40"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="Wq5-Ck-0CN"/>
                                             </constraints>
-                                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             <dataDetectorType key="dataDetectorTypes" address="YES"/>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="Wq5-Ck-0CN"/>
+                                                </mask>
+                                            </variation>
                                         </textView>
                                     </subviews>
                                     <constraints>
@@ -81,6 +98,7 @@
                                         <constraint firstItem="XsB-YR-yTt" firstAttribute="leading" secondItem="QKW-Dl-x6R" secondAttribute="trailing" constant="8" id="g7z-dm-H0B"/>
                                         <constraint firstItem="xIq-58-JJ5" firstAttribute="top" secondItem="efu-y5-O9J" secondAttribute="topMargin" constant="-8" id="gSg-Rk-dTF"/>
                                         <constraint firstItem="XsB-YR-yTt" firstAttribute="height" secondItem="xIq-58-JJ5" secondAttribute="height" id="gqq-nc-XEQ"/>
+                                        <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="QKW-Dl-x6R" secondAttribute="bottom" id="hW2-JM-cKR"/>
                                         <constraint firstItem="99Y-I7-nya" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xIq-58-JJ5" secondAttribute="trailing" constant="8" id="mDj-2y-u4f"/>
                                         <constraint firstItem="MnS-NR-xfc" firstAttribute="trailing" secondItem="efu-y5-O9J" secondAttribute="trailingMargin" id="mMC-Il-yb7"/>
                                         <constraint firstItem="99Y-I7-nya" firstAttribute="trailing" secondItem="efu-y5-O9J" secondAttribute="trailingMargin" id="nPn-AC-hXO"/>
@@ -96,6 +114,9 @@
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="textView" destination="MnS-NR-xfc" id="Bia-oB-k9k"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

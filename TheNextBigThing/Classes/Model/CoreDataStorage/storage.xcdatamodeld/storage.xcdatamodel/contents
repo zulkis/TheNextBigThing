@@ -6,15 +6,15 @@
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="messages" inverseEntity="User" syncable="YES"/>
     </entity>
-    <entity name="User" representedClassName="User" syncable="YES">
-        <attribute name="avatarImage" optional="YES" attributeType="Transformable" storedInTruthFile="YES" syncable="YES"/>
+    <entity name="User" representedClassName="ITBUser" syncable="YES">
+        <attribute name="avatarImageUrl" optional="YES" attributeType="String" storedInTruthFile="YES" syncable="YES"/>
         <attribute name="fullname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Message" inverseName="user" inverseEntity="Message" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Message" positionX="-63" positionY="-18" width="128" height="103"/>
-        <element name="User" positionX="-54" positionY="-9" width="128" height="118"/>
+        <element name="Message" positionX="0" positionY="0" width="128" height="103"/>
+        <element name="User" positionX="0" positionY="0" width="128" height="118"/>
     </elements>
 </model>
