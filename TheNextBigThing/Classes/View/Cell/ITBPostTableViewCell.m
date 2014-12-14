@@ -32,7 +32,6 @@ static const CGFloat ITBDelimiterWidth = 8;
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    
 }
 
 - (void)updateConstraintsWithTableViewWidth:(CGFloat)width {
@@ -62,6 +61,10 @@ static const CGFloat ITBDelimiterWidth = 8;
                             placeholderImage:[UIImage imageNamed:@"AvatarPlaceholdeIcon"]
                                      options:SDWebImageRetryFailed];
     
+}
+
+- (void)updateTimeLabel {
+    self.timeLabel.text = [[SORelativeDateTransformer registeredTransformer] transformedValue:self.post.createdAt];
 }
 
 - (instancetype)init {

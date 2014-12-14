@@ -16,4 +16,6 @@
 
 - (void)updateConstraintsWithTableViewWidth:(CGFloat)width;
 
+- (void)updateTimeLabel;
+
 @end

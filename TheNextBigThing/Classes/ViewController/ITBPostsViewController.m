@@ -46,13 +46,13 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([ITBPostTableViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:NSStringFromClass([ITBPostTableViewCell class])];
     
     [self.postsDataSource addObserver:self
-                      forKeyPath:ITBUpdatingKeyPath
-                         options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-                         context:nil];
+                           forKeyPath:ITBUpdatingKeyPath
+                              options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+                              context:nil];
     [self.postsDataSource addObserver:self
-                      forKeyPath:ITBLoadingOneMoreKeyPath
-                         options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-                         context:nil];
+                           forKeyPath:ITBLoadingOneMoreKeyPath
+                              options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+                              context:nil];
     [self.tableView.refreshControl addTarget:self action:@selector(_refreshControlWantsUpdate:) forControlEvents:UIControlEventValueChanged];
     
     [_postsDataSource prepareWork];
@@ -151,12 +151,14 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
 
 - (void)_startUpdatingTimeForPostsStart {
     const NSTimeInterval timerTimeInterval = 10.f;
-    self.updatingrTimeForPostStartTimer = [NSTimer scheduledTimerWithTimeInterval:timerTimeInterval
-                                                                           target:self
-                                                                         selector:@selector(_performTimeForPostsStartUpdate)
-                                                                         userInfo:nil
-                                                                          repeats:YES];
-    [self.updatingrTimeForPostStartTimer fire];
+    if (!self.updatingrTimeForPostStartTimer) {
+        self.updatingrTimeForPostStartTimer = [NSTimer scheduledTimerWithTimeInterval:timerTimeInterval
+                                                                               target:self
+                                                                             selector:@selector(_performTimeForPostsStartUpdate)
+                                                                             userInfo:nil
+                                                                              repeats:YES];
+        [self.updatingrTimeForPostStartTimer fire];
+    }
 }
 
 - (void)_stopUpdatingTimeForPostsStart {
@@ -166,12 +168,10 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
 
 - (void)_performTimeForPostsStartUpdate {
     NSArray *visibleCells = [self.tableView visibleCells];
-    NSArray *visibleIndexes = [self.tableView indexPathsForVisibleRows];
     int count = [visibleCells count];
     for (int i = 0; i < count; i ++) {
-        NSIndexPath *ip = visibleIndexes[i];
         ITBPostTableViewCell *postCell = visibleCells[i];
-        [postCell setPost:self.postsDataSource[ip]];
+        [postCell updateTimeLabel];
     }
 }
 
@@ -253,7 +253,7 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
         (indexPath.row >= ([self.postsDataSource numberRowsInSection:0] - 5) || [self.postsDataSource numberRowsInSection:0] < 5) && // we are in the end of list
         !self.postsDataSource.loadingOneMorePage &&
         !self.postsDataSource.updating) { // we are not loading
-
+        
         [self.postsDataSource loadOneMorePage];
     }
 }
@@ -264,16 +264,24 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
     [self _startUpdatingTimeForPostsStart];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (self.updatingrTimeForPostStartTimer) {
-        [self _stopUpdatingTimeForPostsStart];
-    }
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self _stopUpdatingTimeForPostsStart];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     if (!decelerate) {
         [self _startUpdatingTimeForPostsStart];
     }
+}
+
+#pragma mark - UIViewControllerRotation
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [self _stopUpdatingTimeForPostsStart];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [self _startUpdatingTimeForPostsStart];
 }
 
 #pragma mark KVO
