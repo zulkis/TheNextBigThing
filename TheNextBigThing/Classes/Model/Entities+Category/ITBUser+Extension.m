@@ -9,7 +9,7 @@
 #import "ITBUser+Extension.h"
 
 static NSString * const ITBUsernameKey = @"username";
-static NSString * const ITBFullnameKey = @"fullname";
+static NSString * const ITBFullnameKey = @"name";
 static NSString * const ITBAvatarUrlKeyPath = @"avatar_image.url";
 
 @implementation ITBUser (Extension)

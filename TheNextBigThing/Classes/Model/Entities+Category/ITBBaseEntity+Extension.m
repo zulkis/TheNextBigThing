@@ -26,12 +26,27 @@ NSString *const ITBIdentifierKey = @"id";
     return entity;
 }
 
++ (instancetype)findWithHighestIdentifierInContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
+    fetchRequest.fetchLimit = 1;
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"identifier" ascending:NO]];
+    NSError *error;
+    return [[context executeFetchRequest:fetchRequest error:&error] lastObject];
+}
+
++ (instancetype)findWithLowestIdentifierInContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:[self entityName]];
+    fetchRequest.fetchLimit = 1;
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"identifier" ascending:YES]];
+    NSError *error = nil;
+    return [context executeFetchRequest:fetchRequest error:&error].lastObject;
+}
+
 + (instancetype)findLastWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:[self entityName]];
     
     fetchRequest.fetchLimit = 1;
     fetchRequest.predicate = predicate;
-    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"identifier" ascending:YES]];
     
     NSError *error = nil;
     
@@ -42,7 +57,6 @@ NSString *const ITBIdentifierKey = @"id";
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
     fetchRequest.fetchLimit = 1;
     fetchRequest.predicate = predicate;
-    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"identifier" ascending:NO]];
     NSError *error;
     return [[context executeFetchRequest:fetchRequest error:&error] lastObject];
 }

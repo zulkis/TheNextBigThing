@@ -14,4 +14,6 @@
 
 @property (nonatomic, weak) ITBPost *post;
 
+- (void)updateConstraintsWithTableViewWidth:(CGFloat)width;
+
 @end

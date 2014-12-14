@@ -33,21 +33,6 @@ static NSString * const ITBLinkUrlKey = @"url";
     return dateFormatter;
 }
 
-
-/*
- "entities": {
- "mentions": [],
- "hashtags": [],
- "links": [
- {
- "url": "http://on.thestar.com/1A4z6aN",
- "text": "http://on.thestar.com/1A4z6aN",
- "pos": 49,
- "len": 29
- }
- ]
- },
- */
 - (void)updateWithDictionary:(NSDictionary *)dictionary {
     [super updateWithDictionary:dictionary];
     
@@ -72,6 +57,8 @@ static NSString * const ITBLinkUrlKey = @"url";
         ITBUser *user = [ITBUser findOrCreateWithIdentifier:userId inContext:self.managedObjectContext];
         [user updateWithDictionary:userDict];
         self.user = user;
+    } else {
+        NSLog(@"");
     }
 }
 

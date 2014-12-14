@@ -10,6 +10,11 @@
 
 @implementation NSManagedObject (Extension)
 
+- (void)updateWithDictionary:(NSDictionary *)dictionary
+{
+    
+}
+
 + (NSString *)entityName {
     NSString *className = NSStringFromClass([self class]);
     if ([className hasPrefix:PROJECT_PREFIX]) {

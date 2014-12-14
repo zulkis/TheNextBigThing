@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  TheNextBigThing
+
+  Created by Alexey Minaev on 14/12/14.
+  Copyright (c) 2014 IttyBitty. All rights reserved.
+*/
+
+"common.yes" = "Yes";
+"common.no" = "No";
+"common.openUrlFormat" = "Open URL: %@";

@@ -19,11 +19,11 @@
         <attribute name="fullname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="posts" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Post" inverseName="user" inverseEntity="Post" syncable="YES"/>
+        <relationship name="posts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Post" inverseName="user" inverseEntity="Post" syncable="YES"/>
     </entity>
     <elements>
         <element name="Link" positionX="0" positionY="0" width="128" height="103"/>
         <element name="Post" positionX="0" positionY="0" width="128" height="135"/>
-        <element name="User" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="User" positionX="0" positionY="0" width="128" height="118"/>
     </elements>
 </model>

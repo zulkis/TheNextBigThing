@@ -8,15 +8,23 @@
 
 #import "ITBPostTableViewCell.h"
 #import "ITBPost+Extension.h"
+#import "ITBUser+Extension.h"
 
-#import <NSAttributedString+OHAdditions.h>
+#import "ITBLinkLabel.h"
+#import <UIImageView+WebCache.h>
+#import "SORelativeDateTransformer.h"
+
+static const CGFloat ITBDelimiterWidth = 8;
 
 @interface ITBPostTableViewCell ()
 
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
-@property (nonatomic, weak) IBOutlet UILabel *postLabel;
+@property (nonatomic, weak) IBOutlet UILabel *usernameLabel;
+@property (nonatomic, weak) IBOutlet UILabel *fullnameLabel;
+@property (nonatomic, weak) IBOutlet UILabel *timeLabel;
+@property (nonatomic, weak) IBOutlet UIImageView *avatarImageView;
 
-@property (nonatomic, strong) UITapGestureRecognizer *linksTapGestureRecognizer;
+@property (nonatomic, weak) IBOutlet ITBLinkLabel *postLabel;
 
 @end
 
@@ -24,8 +32,11 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    self.linksTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_onGestureRecognizerTap:)];
-    [self.postLabel addGestureRecognizer:self.linksTapGestureRecognizer];
+    
+}
+
+- (void)updateConstraintsWithTableViewWidth:(CGFloat)width {
+    self.postLabel.preferredMaxLayoutWidth = width - (CGRectGetWidth(self.avatarImageView.frame) + ITBDelimiterWidth*3);
 }
 
 + (instancetype)dummyCell {
@@ -40,46 +51,21 @@
 - (void)setPost:(ITBPost *)post {
     _post = post;
     
-    self.postLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.postLabel.frame);
-    
     self.postLabel.attributedText = post.attributedText;
     self.titleLabel.text = post.identifier;
+    self.usernameLabel.text = [NSString stringWithFormat:@"@%@", post.user.username];
+    self.fullnameLabel.text = post.user.fullname;
+    
+    self.timeLabel.text = [[SORelativeDateTransformer registeredTransformer] transformedValue:post.createdAt];
+    
+    [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:post.user.avatarImageUrl]
+                            placeholderImage:[UIImage imageNamed:@"AvatarPlaceholdeIcon"]
+                                     options:SDWebImageRetryFailed];
+    
 }
 
 - (instancetype)init {
     return [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([self class]) owner:self options:nil] lastObject];
-}
-
-#pragma mark - GestureRecognizer
-
-- (void)_onGestureRecognizerTap:(UITapGestureRecognizer *)sender {
-    CGPoint location = [sender locationInView:sender.view];
-    
-    // init text storage
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithAttributedString:self.postLabel.attributedText];
-    [string addAttribute:NSFontAttributeName value:self.postLabel.font range:NSMakeRange(0, self.postLabel.attributedText.length)];
-    
-    NSTextStorage *textStorage = [[NSTextStorage alloc] initWithAttributedString:string];
-    NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
-    [textStorage addLayoutManager:layoutManager];
-    
-    // init text container
-    NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:sender.view.bounds.size];
-    textContainer.lineFragmentPadding  = 0;
-    textContainer.maximumNumberOfLines = self.postLabel.numberOfLines;
-    textContainer.lineBreakMode        = self.postLabel.lineBreakMode;
-    textContainer.layoutManager        = layoutManager;
-    
-    [layoutManager addTextContainer:textContainer];
-    [layoutManager setTextStorage:textStorage];
-    
-    NSUInteger characterIndex = [layoutManager characterIndexForPoint:location
-                                                      inTextContainer:textContainer
-                             fractionOfDistanceBetweenInsertionPoints:NULL];
-    
-    NSRangePointer rangePtr = nil;
-    NSURL *url = [self.postLabel.attributedText URLAtIndex:characterIndex effectiveRange:rangePtr];
-    NSLog(@"URL: %@", url);
 }
 
 @end

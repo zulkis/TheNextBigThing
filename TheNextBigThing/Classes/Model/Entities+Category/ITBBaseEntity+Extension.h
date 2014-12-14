@@ -15,6 +15,9 @@ extern NSString *const ITBIdentifierKey;
 
 + (NSUInteger)countWithPredicate:(NSPredicate *)predicate fetchLimit:(NSInteger)fetchLimit inContext:(NSManagedObjectContext *)context;
 
++ (instancetype)findWithHighestIdentifierInContext:(NSManagedObjectContext *)context;
++ (instancetype)findWithLowestIdentifierInContext:(NSManagedObjectContext *)context;
+
 + (instancetype)findLastWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context;
 + (instancetype)findFirstWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context;
 + (instancetype)findOrCreateWithIdentifier:(NSString *)identifier inContext:(NSManagedObjectContext *)context;

@@ -6,7 +6,7 @@
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
-        <tableViewCell contentMode="scaleToFill" horizontalHuggingPriority="256" verticalHuggingPriority="256" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" selectionStyle="default" indentationWidth="10" reuseIdentifier="ITBPostTableViewCell" rowHeight="80" id="Cst-eK-7IX" customClass="ITBPostTableViewCell">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ITBPostTableViewCell" rowHeight="78" id="Cst-eK-7IX" customClass="ITBPostTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" horizontalHuggingPriority="256" verticalHuggingPriority="256" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" tableViewCell="Cst-eK-7IX" id="ogw-Wo-ely">
@@ -20,67 +20,77 @@
                             <constraint firstAttribute="width" constant="64" id="moV-sw-zFC"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Marco Arment" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="bix-e1-ewf">
-                        <rect key="frame" x="80" y="8" width="105.5" height="19.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="255" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" text="Marco Armeny" lineBreakMode="tailTruncation" baselineAdjustment="none" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="bix-e1-ewf">
+                        <rect key="frame" x="80" y="8" width="108.5" height="17.5"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" id="8mt-iy-wVA"/>
+                            <constraint firstAttribute="height" constant="18" id="pKG-nj-zmy"/>
                         </constraints>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@marcoarment" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="mkB-nR-3zZ">
-                        <rect key="frame" x="193" y="8" width="90.5" height="19.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="@marcoarment" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="mkB-nR-3zZ">
+                        <rect key="frame" x="221" y="8" width="90.5" height="17.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1h" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="xn8-d7-mSc">
-                        <rect key="frame" x="293.5" y="8" width="18.5" height="19.5"/>
+                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="755" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" preferredMaxLayoutWidth="232" translatesAutoresizingMaskIntoConstraints="NO" id="xRQ-Z6-oI7" customClass="ITBLinkLabel">
+                        <rect key="frame" x="80" y="30" width="232" height="20"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="XTT-lw-e5H"/>
+                        </constraints>
+                        <attributedString key="attributedText">
+                            <fragment content="Label">
+                                <attributes>
+                                    <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <font key="NSFont" size="17" name="HelveticaNeue"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" text="asdfasdfasdf" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="xn8-d7-mSc">
+                        <rect key="frame" x="240" y="58" width="72" height="13.5"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="20" id="Vzh-3W-Vea"/>
                         </constraints>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                         <color key="textColor" white="0.50341296930000001" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="755" verticalHuggingPriority="755" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="xRQ-Z6-oI7">
-                        <rect key="frame" x="80" y="31" width="232" height="40.5"/>
-                        <gestureRecognizers/>
-                        <constraints>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="XTT-lw-e5H"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="xRQ-Z6-oI7" firstAttribute="top" secondItem="xn8-d7-mSc" secondAttribute="bottom" constant="4" id="6cw-pu-chK"/>
+                    <constraint firstItem="xRQ-Z6-oI7" firstAttribute="top" secondItem="mkB-nR-3zZ" secondAttribute="bottom" constant="4.5" id="6Vi-pF-MaD"/>
+                    <constraint firstItem="mkB-nR-3zZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bix-e1-ewf" secondAttribute="trailing" constant="8" id="7d1-gM-ePI"/>
                     <constraint firstItem="mkB-nR-3zZ" firstAttribute="top" secondItem="ogw-Wo-ely" secondAttribute="topMargin" id="9SV-It-Fkx"/>
-                    <constraint firstItem="xn8-d7-mSc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="mkB-nR-3zZ" secondAttribute="trailing" constant="2" id="EUg-ps-z96"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="mkB-nR-3zZ" secondAttribute="trailing" id="C9b-kJ-DUn"/>
                     <constraint firstItem="bix-e1-ewf" firstAttribute="height" secondItem="mkB-nR-3zZ" secondAttribute="height" id="EWI-hf-KX3"/>
                     <constraint firstItem="xRQ-Z6-oI7" firstAttribute="leading" secondItem="s6t-0e-FSG" secondAttribute="trailing" constant="8" id="G3i-A7-CAf"/>
-                    <constraint firstItem="xRQ-Z6-oI7" firstAttribute="bottom" secondItem="ogw-Wo-ely" secondAttribute="bottomMargin" id="JEl-RZ-caq"/>
-                    <constraint firstItem="xn8-d7-mSc" firstAttribute="top" secondItem="ogw-Wo-ely" secondAttribute="topMargin" id="PMf-y6-jAR"/>
-                    <constraint firstItem="xn8-d7-mSc" firstAttribute="height" secondItem="bix-e1-ewf" secondAttribute="height" id="Sup-8L-Nhh"/>
                     <constraint firstItem="s6t-0e-FSG" firstAttribute="leading" secondItem="ogw-Wo-ely" secondAttribute="leadingMargin" id="VXd-JT-jqn"/>
                     <constraint firstItem="xn8-d7-mSc" firstAttribute="trailing" secondItem="ogw-Wo-ely" secondAttribute="trailingMargin" id="Z8i-9p-RQU"/>
                     <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="s6t-0e-FSG" secondAttribute="bottom" id="jgL-Nz-xHF"/>
-                    <constraint firstItem="xn8-d7-mSc" firstAttribute="height" secondItem="mkB-nR-3zZ" secondAttribute="height" id="kYo-Yl-WkU"/>
                     <constraint firstItem="bix-e1-ewf" firstAttribute="top" secondItem="ogw-Wo-ely" secondAttribute="topMargin" id="lto-4c-oeF"/>
                     <constraint firstItem="bix-e1-ewf" firstAttribute="leading" secondItem="s6t-0e-FSG" secondAttribute="trailing" constant="8" id="mIt-pt-nRr"/>
                     <constraint firstItem="s6t-0e-FSG" firstAttribute="top" secondItem="ogw-Wo-ely" secondAttribute="topMargin" id="mUz-GD-KJv"/>
                     <constraint firstAttribute="trailingMargin" secondItem="xRQ-Z6-oI7" secondAttribute="trailing" id="puq-yI-Zgb"/>
-                    <constraint firstItem="mkB-nR-3zZ" firstAttribute="leading" secondItem="bix-e1-ewf" secondAttribute="trailing" constant="8" id="znC-Ly-1e2"/>
+                    <constraint firstItem="xn8-d7-mSc" firstAttribute="top" secondItem="xRQ-Z6-oI7" secondAttribute="bottom" constant="8" id="tjI-E9-cfA"/>
+                    <constraint firstItem="xn8-d7-mSc" firstAttribute="bottom" secondItem="ogw-Wo-ely" secondAttribute="bottomMargin" id="u9h-Y9-e7i"/>
                 </constraints>
             </tableViewCellContentView>
             <gestureRecognizers/>
             <connections>
+                <outlet property="avatarImageView" destination="s6t-0e-FSG" id="ldA-vY-96W"/>
+                <outlet property="fullnameLabel" destination="bix-e1-ewf" id="mwc-8v-Xer"/>
                 <outlet property="postLabel" destination="xRQ-Z6-oI7" id="GTd-SP-79S"/>
+                <outlet property="timeLabel" destination="xn8-d7-mSc" id="tng-Ul-pod"/>
                 <outlet property="titleLabel" destination="bix-e1-ewf" id="nxR-18-M7K"/>
+                <outlet property="usernameLabel" destination="mkB-nR-3zZ" id="zHv-mC-4RG"/>
             </connections>
-            <point key="canvasLocation" x="376" y="426"/>
+            <point key="canvasLocation" x="253" y="666"/>
         </tableViewCell>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
     </objects>

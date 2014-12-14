@@ -20,6 +20,21 @@ PODS:
   - AFNetworking/UIKit (2.5.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - BlocksKit (2.2.5):
+    - BlocksKit/All (= 2.2.5)
+  - BlocksKit/All (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+    - BlocksKit/MessageUI
+    - BlocksKit/UIKit
+  - BlocksKit/Core (2.2.5)
+  - BlocksKit/DynamicDelegate (2.2.5)
+  - BlocksKit/MessageUI (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+  - BlocksKit/UIKit (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
   - OHAttributedStringAdditions (1.2.0)
   - SDWebImage (3.7.1):
     - SDWebImage/Core (= 3.7.1)
@@ -27,11 +42,13 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - BlocksKit
   - OHAttributedStringAdditions
   - SDWebImage
 
 SPEC CHECKSUMS:
   AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
+  BlocksKit: 4439e7f30a9f90743462ca63545a15c1f4304cef
   OHAttributedStringAdditions: 7e8e310db6ee2584933ce2fa2dcb5bea2a5e76f0
   SDWebImage: 116e88633b5b416ea0ca4b334a4ac59cf72dd38d
 

@@ -12,6 +12,11 @@
 		13793BFB1A3C97FC00605858 /* ITBTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13793BFA1A3C97FC00605858 /* ITBTableView.m */; };
 		13D140A71A3CCEE20046CEE9 /* ITBLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D140A61A3CCEE20046CEE9 /* ITBLink.m */; };
 		13D140AA1A3CD0AC0046CEE9 /* NSManagedObject+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D140A91A3CD0AC0046CEE9 /* NSManagedObject+Extension.m */; };
+		13D140AD1A3D656B0046CEE9 /* ITBLinkLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D140AC1A3D656B0046CEE9 /* ITBLinkLabel.m */; };
+		13D140B21A3D6BC40046CEE9 /* CoreTextUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D140B01A3D67840046CEE9 /* CoreTextUtils.m */; };
+		13D140B91A3D86810046CEE9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 13D140B71A3D85770046CEE9 /* Localizable.strings */; };
+		13D140BF1A3DDBBA0046CEE9 /* SORelativeDateTransformer.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 13D140BC1A3DDBBA0046CEE9 /* SORelativeDateTransformer.bundle */; };
+		13D140C01A3DDBBA0046CEE9 /* SORelativeDateTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D140BE1A3DDBBA0046CEE9 /* SORelativeDateTransformer.m */; };
 		13D8D33B1A3B2E1A00820CEC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D33A1A3B2E1A00820CEC /* main.m */; };
 		13D8D33E1A3B2E1A00820CEC /* ITBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D33D1A3B2E1A00820CEC /* ITBAppDelegate.m */; };
 		13D8D3441A3B2E1A00820CEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13D8D3421A3B2E1A00820CEC /* Main.storyboard */; };
@@ -49,10 +54,19 @@
 		13793BF61A3C97F600605858 /* ITBPostTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ITBPostTableViewCell.xib; sourceTree = "<group>"; };
 		13793BF91A3C97FC00605858 /* ITBTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITBTableView.h; sourceTree = "<group>"; };
 		13793BFA1A3C97FC00605858 /* ITBTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITBTableView.m; sourceTree = "<group>"; };
+		13B1985E1A3DF2A900F03EB2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		13D140A51A3CCEE20046CEE9 /* ITBLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ITBLink.h; path = TheNextBigThing/Classes/Model/Entities/ITBLink.h; sourceTree = SOURCE_ROOT; };
 		13D140A61A3CCEE20046CEE9 /* ITBLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ITBLink.m; path = TheNextBigThing/Classes/Model/Entities/ITBLink.m; sourceTree = SOURCE_ROOT; };
 		13D140A81A3CD0AC0046CEE9 /* NSManagedObject+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+Extension.h"; sourceTree = "<group>"; };
 		13D140A91A3CD0AC0046CEE9 /* NSManagedObject+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+Extension.m"; sourceTree = "<group>"; };
+		13D140AB1A3D656B0046CEE9 /* ITBLinkLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITBLinkLabel.h; sourceTree = "<group>"; };
+		13D140AC1A3D656B0046CEE9 /* ITBLinkLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITBLinkLabel.m; sourceTree = "<group>"; };
+		13D140AF1A3D67840046CEE9 /* CoreTextUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreTextUtils.h; sourceTree = "<group>"; };
+		13D140B01A3D67840046CEE9 /* CoreTextUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreTextUtils.m; sourceTree = "<group>"; };
+		13D140B61A3D85770046CEE9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		13D140BC1A3DDBBA0046CEE9 /* SORelativeDateTransformer.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SORelativeDateTransformer.bundle; sourceTree = "<group>"; };
+		13D140BD1A3DDBBA0046CEE9 /* SORelativeDateTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SORelativeDateTransformer.h; sourceTree = "<group>"; };
+		13D140BE1A3DDBBA0046CEE9 /* SORelativeDateTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SORelativeDateTransformer.m; sourceTree = "<group>"; };
 		13D8D3351A3B2E1A00820CEC /* TheNextBigThing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheNextBigThing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13D8D3391A3B2E1A00820CEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13D8D33A1A3B2E1A00820CEC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -123,6 +137,26 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		13D140AE1A3D67840046CEE9 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				13D140BB1A3DDBBA0046CEE9 /* SORelativeDateTransformer */,
+				13D140AF1A3D67840046CEE9 /* CoreTextUtils.h */,
+				13D140B01A3D67840046CEE9 /* CoreTextUtils.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		13D140BB1A3DDBBA0046CEE9 /* SORelativeDateTransformer */ = {
+			isa = PBXGroup;
+			children = (
+				13D140BC1A3DDBBA0046CEE9 /* SORelativeDateTransformer.bundle */,
+				13D140BD1A3DDBBA0046CEE9 /* SORelativeDateTransformer.h */,
+				13D140BE1A3DDBBA0046CEE9 /* SORelativeDateTransformer.m */,
+			);
+			path = SORelativeDateTransformer;
+			sourceTree = "<group>";
+		};
 		13D8D32C1A3B2E1A00820CEC = {
 			isa = PBXGroup;
 			children = (
@@ -164,6 +198,7 @@
 				13D8D33A1A3B2E1A00820CEC /* main.m */,
 				13D8D36D1A3B2FA600820CEC /* ITBMacroses.h */,
 				13D8D36E1A3B300E00820CEC /* thenextbigthing-Prefix.pch */,
+				13D140B71A3D85770046CEE9 /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -188,6 +223,7 @@
 		13D8D35E1A3B2E9400820CEC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				13D140AE1A3D67840046CEE9 /* Utils */,
 				13D8D35F1A3B2E9400820CEC /* Categories */,
 				13D8D3621A3B2E9400820CEC /* Model */,
 				13D8D3661A3B2E9400820CEC /* ViewController */,
@@ -264,6 +300,8 @@
 			children = (
 				13793BF91A3C97FC00605858 /* ITBTableView.h */,
 				13793BFA1A3C97FC00605858 /* ITBTableView.m */,
+				13D140AB1A3D656B0046CEE9 /* ITBLinkLabel.h */,
+				13D140AC1A3D656B0046CEE9 /* ITBLinkLabel.m */,
 				13793BF31A3C97F600605858 /* Cell */,
 			);
 			path = View;
@@ -366,8 +404,8 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				en,
 			);
 			mainGroup = 13D8D32C1A3B2E1A00820CEC;
 			productRefGroup = 13D8D3361A3B2E1A00820CEC /* Products */;
@@ -385,9 +423,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13D140B91A3D86810046CEE9 /* Localizable.strings in Resources */,
 				13D8D3441A3B2E1A00820CEC /* Main.storyboard in Resources */,
 				13D8D3491A3B2E1A00820CEC /* LaunchScreen.xib in Resources */,
 				13D8D3461A3B2E1A00820CEC /* Images.xcassets in Resources */,
+				13D140BF1A3DDBBA0046CEE9 /* SORelativeDateTransformer.bundle in Resources */,
 				13793BF81A3C97F600605858 /* ITBPostTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -439,6 +479,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13D140B21A3D6BC40046CEE9 /* CoreTextUtils.m in Sources */,
+				13D140C01A3DDBBA0046CEE9 /* SORelativeDateTransformer.m in Sources */,
 				13D8D36C1A3B2E9400820CEC /* ITBPostsViewController.m in Sources */,
 				13D140AA1A3CD0AC0046CEE9 /* NSManagedObject+Extension.m in Sources */,
 				13D8D38C1A3B4C4200820CEC /* ITBBaseEntity.m in Sources */,
@@ -449,6 +491,7 @@
 				13D8D3741A3B319400820CEC /* storage.xcdatamodeld in Sources */,
 				13D8D36B1A3B2E9400820CEC /* ITBStorageManager.m in Sources */,
 				13D8D3901A3B4CD000820CEC /* ITBBaseEntity+Extension.m in Sources */,
+				13D140AD1A3D656B0046CEE9 /* ITBLinkLabel.m in Sources */,
 				13D8D3891A3B4BDA00820CEC /* ITBPostsDataSource.m in Sources */,
 				13D8D3931A3B4D6F00820CEC /* ITBPost+Extension.m in Sources */,
 				13D8D33E1A3B2E1A00820CEC /* ITBAppDelegate.m in Sources */,
@@ -478,6 +521,16 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		13D140B71A3D85770046CEE9 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				13D140B61A3D85770046CEE9 /* Base */,
+				13B1985E1A3DF2A900F03EB2 /* en */,
+			);
+			name = Localizable.strings;
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
 		13D8D3421A3B2E1A00820CEC /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -519,7 +572,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -531,7 +584,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -566,7 +619,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

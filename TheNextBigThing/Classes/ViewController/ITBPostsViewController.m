@@ -13,7 +13,6 @@
 #import "ITBPostTableViewCell.h"
 #import "ITBPost.h"
 
-static NSInteger ITBPostsSectionLoadingMoreIndicator = 1;
 static CGFloat ITBPostsEstimatedCellHeight = 60.f;
 
 @interface ITBPostsViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
@@ -26,6 +25,8 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
 
 @property (nonatomic, strong) ITBPostsDataSource *postsDataSource;
 
+@property (nonatomic, strong) NSTimer *updatingrTimeForPostStartTimer;
+
 @end
 
 @implementation ITBPostsViewController
@@ -35,7 +36,6 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
     
     if (self) {
         _postsDataSource = [ITBPostsDataSource new];
-        [_postsDataSource prepareWork];
     }
     return self;
 }
@@ -53,24 +53,32 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
                       forKeyPath:ITBLoadingOneMoreKeyPath
                          options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
                          context:nil];
+    [self.tableView.refreshControl addTarget:self action:@selector(_refreshControlWantsUpdate:) forControlEvents:UIControlEventValueChanged];
     
-    [self.tableView.refreshControl addTarget:self action:@selector(refreshControlWantsUpdate:) forControlEvents:UIControlEventValueChanged];
-
-
+    [_postsDataSource prepareWork];
+    
+    
     self.postsDataSource.fetchedResultsController.delegate = self;
     weakify(self)
     self.postsDataSource.onDidEndPerformFetch = ^{
         strongify(self)
         [self.tableView reloadData];
     };
-//    [self.postsDataSource update];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    // initial cells did not look autoresizable' without that
+    [self.postsDataSource update];
+    
     [self.tableView reloadData];
+    
+    [self _startUpdatingTimeForPostsStart];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self _stopUpdatingTimeForPostsStart];
 }
 
 - (void)dealloc {
@@ -81,11 +89,13 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
     [self.postsDataSource removeObserver:self forKeyPath:ITBLoadingOneMoreKeyPath];
     
     [self.postsDataSource reset];
+    
+    [self _stopUpdatingTimeForPostsStart];
 }
 
 #pragma mark - Private
 
-- (void)refreshControlWantsUpdate:(UIRefreshControl *)refreshControl {
+- (void)_refreshControlWantsUpdate:(UIRefreshControl *)refreshControl {
     [self.tableView.refreshControl beginRefreshing];
     [self.postsDataSource update];
 }
@@ -93,6 +103,16 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
 - (void)_updateLoadingIndicatorWithValue:(BOOL)value {
     if (value) {
         [self.tableView.refreshControl beginRefreshing];
+        if (self.tableView.contentOffset.y == 0) {
+            
+            [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^(void){
+                
+                self.tableView.contentOffset = CGPointMake(0, -self.tableView.refreshControl.frame.size.height);
+                
+            } completion:^(BOOL finished){
+                
+            }];
+        }
     } else {
         [self.tableView.refreshControl endRefreshing];
     }
@@ -125,10 +145,34 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
     self.tableView.tableFooterView = nil;
 }
 
-- (void)_configureCell:(ITBPostTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    ITBPost *post = self.postsDataSource[indexPath];
-    
+- (void)_configureCell:(ITBPostTableViewCell *)cell withPost:(ITBPost *)post {
     cell.post = post;
+}
+
+- (void)_startUpdatingTimeForPostsStart {
+    const NSTimeInterval timerTimeInterval = 10.f;
+    self.updatingrTimeForPostStartTimer = [NSTimer scheduledTimerWithTimeInterval:timerTimeInterval
+                                                                           target:self
+                                                                         selector:@selector(_performTimeForPostsStartUpdate)
+                                                                         userInfo:nil
+                                                                          repeats:YES];
+    [self.updatingrTimeForPostStartTimer fire];
+}
+
+- (void)_stopUpdatingTimeForPostsStart {
+    [self.updatingrTimeForPostStartTimer invalidate];
+    self.updatingrTimeForPostStartTimer = nil;
+}
+
+- (void)_performTimeForPostsStartUpdate {
+    NSArray *visibleCells = [self.tableView visibleCells];
+    NSArray *visibleIndexes = [self.tableView indexPathsForVisibleRows];
+    int count = [visibleCells count];
+    for (int i = 0; i < count; i ++) {
+        NSIndexPath *ip = visibleIndexes[i];
+        ITBPostTableViewCell *postCell = visibleCells[i];
+        [postCell setPost:self.postsDataSource[ip]];
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -138,9 +182,28 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
     NSString *reuseIdentifier = NSStringFromClass([ITBPostTableViewCell class]);
     ITBPostTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
     
-    [self _configureCell:cell atIndexPath:indexPath];
+    ITBPost *post = self.postsDataSource[indexPath];
+    [self _configureCell:cell withPost:post];
     
     return cell;
+}
+
+/*
+ Increaasing performance since we could have a LOT of posts in DB
+ */
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    ITBPost *post = self.postsDataSource[indexPath];
+    NSMutableDictionary *cachedHeights = nil;
+    if (UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
+        cachedHeights = self.postsDataSource.cachedHeights;
+    } else {
+        cachedHeights = self.postsDataSource.horizontalCachedHeights;
+    }
+    
+    if (cachedHeights[post.identifier]) {
+        return [cachedHeights[post.identifier] floatValue];
+    }
+    return 100;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -151,18 +214,26 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
         sizingCell = [ITBPostTableViewCell new];
     });
     
-    NSNumber *ix = @(indexPath.row);
+    ITBPost *post = self.postsDataSource[indexPath];
     
-    if (!self.postsDataSource.cachedHeights[ix]) {
-        [sizingCell setNeedsUpdateConstraints];
-        [self _configureCell:sizingCell atIndexPath:indexPath];
+    NSMutableDictionary *cachedHeights = nil;
+    if (UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
+        cachedHeights = self.postsDataSource.cachedHeights;
+    } else {
+        cachedHeights = self.postsDataSource.horizontalCachedHeights;
+    }
+    
+    if (!cachedHeights[post.identifier]) {
+        [sizingCell updateConstraintsWithTableViewWidth:CGRectGetWidth(self.tableView.frame)];
+        
+        [self _configureCell:sizingCell withPost:post];
         
         CGFloat cellHeight = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingExpandedSize].height + 1;
         
-        self.postsDataSource.cachedHeights[ix] = @(cellHeight);
+        cachedHeights[post.identifier] = @(cellHeight);
     }
-
-    return [self.postsDataSource.cachedHeights[ix] floatValue];
+    
+    return [cachedHeights[post.identifier] floatValue];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -184,6 +255,24 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
         !self.postsDataSource.updating) { // we are not loading
 
         [self.postsDataSource loadOneMorePage];
+    }
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    [self _startUpdatingTimeForPostsStart];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (self.updatingrTimeForPostStartTimer) {
+        [self _stopUpdatingTimeForPostsStart];
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (!decelerate) {
+        [self _startUpdatingTimeForPostsStart];
     }
 }
 
@@ -214,14 +303,14 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 }
 
-//#pragma mark - NSFetchedResultsControllerDelegate
-//
+#pragma mark - NSFetchedResultsControllerDelegate
+
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
     [self.tableView beginUpdates];
     self.beganUpdates = YES;
 }
-//
+
 - (void)controller:(NSFetchedResultsController *)controller
   didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex
@@ -268,13 +357,12 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
             break;
     }
 }
-//
+
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     if (self.beganUpdates) {
         [self.tableView endUpdates];
     }
-//    [self.tableView reloadData];
 }
 
 @end

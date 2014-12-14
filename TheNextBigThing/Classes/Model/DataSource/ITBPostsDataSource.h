@@ -25,6 +25,7 @@ extern NSString * const ITBLoadingOneMoreKeyPath;
 @property (nonatomic, assign) BOOL canBeLoadMore;
 
 @property (nonatomic, strong) NSMutableDictionary *cachedHeights;
+@property (nonatomic, strong) NSMutableDictionary *horizontalCachedHeights;
 
 @property (nonatomic, weak, readonly) NSURLSessionDataTask *updateDataTask;
 @property (nonatomic, weak, readonly) NSURLSessionDataTask *loadOneMorePageDataTask;

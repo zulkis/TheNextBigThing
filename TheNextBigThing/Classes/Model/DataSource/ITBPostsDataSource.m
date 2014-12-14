@@ -47,6 +47,7 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
 @property (nonatomic, strong) NSTimer *updateTimer;
 @property (nonatomic, strong) NSDate *backgroundEnteringDate;
 
+
 @end
 
 @implementation ITBPostsDataSource
@@ -62,12 +63,13 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
     if (self) {
         _loadingPageSize = 100;
         _cachedHeights = [NSMutableDictionary new];
+        _horizontalCachedHeights = [NSMutableDictionary new];
         
         NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"identifier"];
         configuration.HTTPAdditionalHeaders = @{@"Authorization": @"Bearer AQAAAAAADGrdVFberCBgUAzuQt1brrJqk5-sH4uH7E8-kLlFAWDwTr6oSg6QipQ45BVBBcw0QdjM-no6mtllYup39NmUeO3wpg"};
         _sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://api.app.net"]
                                                    sessionConfiguration:configuration];
-        
+
         //TODO: more settings
     }
     
@@ -124,11 +126,16 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
     }
     self.updating = YES;
     
+    ITBPost *message = [ITBPost findWithHighestIdentifierInContext:[ITBStorageManager sharedInstance].mainThreadContext];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{@"count":@(-self.loadingPageSize)}];
+    if (message) {
+        params[@"since_id"] = message.identifier;
+    }
+    
     self.updateDataTask = [_sessionManager GET:@"posts/stream/global"
-                                    parameters:@{@"count":@(self.loadingPageSize)}
+                                    parameters:params
                                        success:^(NSURLSessionDataTask *task, id responseObject) {
-                                           [[self class] clearLoadedEntities];
-                                           [self.cachedHeights removeAllObjects];
                                            [self parseRequestResponse:responseObject[@"data"] meta:responseObject[@"meta"] completion:^(NSUInteger parsedCount) {
                                                
                                            }];
@@ -150,9 +157,9 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
     
     self.loadingOneMorePage = YES;
     
-    ITBPost *message = [ITBPost findLastWithPredicate:nil inContext:[ITBStorageManager sharedInstance].mainThreadContext];
+    ITBPost *message = [ITBPost findWithLowestIdentifierInContext:[ITBStorageManager sharedInstance].mainThreadContext];
     self.updateDataTask = [_sessionManager GET:@"posts/stream/global"
-                                    parameters:@{@"count":@10000, @"before_id":message.identifier}
+                                    parameters:@{@"count":@(self.loadingPageSize), @"before_id":message.identifier}
                                        success:^(NSURLSessionDataTask *task, id responseObject) {
                                            [self parseRequestResponse:responseObject[@"data"] meta:responseObject[@"meta"] completion:^(NSUInteger parsedCount) {
 
@@ -165,32 +172,6 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
                                                self.loadingOneMorePage = NO;
                                            }
                                        }];
-    
-    //    JSONHTTPOperation *loadOneMorePageRequest = [self createLoadOneMorePageRequest];
-    //    self.loadOneMorePageRequest = loadOneMorePageRequest;
-    //    self.loadingOneMorePage = (_loadOneMorePageRequest != nil);
-    //    weakify(self);
-    //    [_loadOneMorePageRequest startOnDefaultQueueWithExecutionThreadCompletion:^(id result, NSError *error) {
-    //        strongify(self);
-    //        if (error != nil) {
-    //            ERROR_TO_LOG(@"error != nil, error = %@", error);
-    //            self.loadOneMorePageRequest = nil;
-    //            self.loadingOneMorePage = NO;
-    //        } else {
-    //            // retain request to be available in block
-    //            __block JSONHTTPOperation *request = self.updateRequest;
-    //            [self parseRequestResponse:result completion:^(NSUInteger parsedCount) {
-    //                if (parsedCount < [self loadingPageSize]) {
-    //                    self.canBeLoadMore = NO;
-    //                }
-    //                if (parsedCount == 0) {
-    //                    request = nil;
-    //                    self.loadingOneMorePage = NO;
-    //                }
-    //            }];
-    //        }
-    //        self.updatedTriggeredAutomatically = NO;
-    //    }];
 }
 
 - (void)parseRequestResponse:(NSArray *)dictionariesArray
@@ -198,23 +179,15 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
                   completion:(void (^)(NSUInteger parsedCount))completion {
     
     __block NSMutableArray *parsedObjects = [NSMutableArray array];
-    //    __block NSDictionary *requestData = [self.updateRequest.dataDictionary copy];
     [self.storageManager saveDataSerialWithPrivateContextSupport:^(NSManagedObjectContext *privateContext) {
-        if (self.loadOneMorePageDataTask) {
-            //            requestData = self.loadOneMorePageDataTask.response.;
-        }
-
-        BOOL loadedPageIsLast = ![meta[ITBDataSourceMoreKey] boolValue];
-        
         NSInteger firstID = [meta[ITBDataSourceMaxIdKey] integerValue];
         NSInteger lastID = [meta[ITBDataSourceMinIdKey] integerValue];
 
-        
         NSString *entityName = [[self class] entityName];
         NSString *idKey = ITBIdentifierKey;
         
         NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
-        // [id_last, id_first)
+        
         fetchRequest.predicate = [NSPredicate predicateWithFormat:@"identifier >= %@ && identifier < %@", [@(lastID) stringValue], [@(firstID) stringValue]];
         fetchRequest.includesPropertyValues = YES;
         NSError *executeError = nil;
@@ -242,7 +215,7 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
         Class class = NSClassFromString(className);
         
         /*
-         3. Updating or creating messages with IDs
+            Updating or creating messages with IDs
          */
         for (NSUInteger i = 0; i < dictionariesArray.count; i++) {
             NSMutableDictionary *dictionary = dictionariesArray[i];
@@ -257,37 +230,6 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
             [message updateWithDictionary:dictionary];
             [parsedObjects addObject:message];
         }
-        
-        /*
-         4. Delete cached messages with id in the interval [id_last, id_first) (note, that id_first >= id_last).
-         If id_first was not defined than we should remove all messages with id >= id_last (first page is loaded).
-         If id_last was not defined - do nothing until step 6 (this will only happen if we loading first page and it is empty).
-         */
-        NSArray *oldObjects = [idEntityDictionary allValues];
-        
-        for (ITBPost *entity in oldObjects) {
-            [privateContext deleteObject:entity];
-        }
-        /*
-         6. If loaded page is last (loaded messages count < requested count) than we should delete all messages with id < id_last.
-         If id_last was not defined - remove all messages from cache (this will only happen if we loading first page and it is empty).
-         Note: this step is necessary in case last message in the entire messages list was cached but than was removed from server.
-         */
-        if (loadedPageIsLast) {
-            if (lastID == ITBUndefinedId) {
-                fetchRequest.predicate = nil;
-            } else {
-                fetchRequest.predicate = [NSPredicate predicateWithFormat:@"identifier < %@", [@(lastID) stringValue]];
-            }
-            NSError *executeError = nil;
-            NSArray *objectsToDelete = [privateContext executeFetchRequest:fetchRequest error:&executeError];
-            if (executeError) {
-                ERROR_TO_LOG(@"%@", executeError);
-            }
-            for (ITBPost *entity in objectsToDelete) {
-                [privateContext deleteObject:entity];
-            }
-        }
     } completion:^(NSError *saveError){
         if (saveError != nil) {
             ERROR_TO_LOG(@"saveError = %@", saveError);
@@ -301,9 +243,6 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
 }
 
 - (void)dataSourceSyncedAndShouldUpdateUI:(BOOL)shouldUpdateUI {
-    if (shouldUpdateUI) {
-//        [self performFetch];
-    }
     self.updating = NO;
     self.loadingOneMorePage = NO;
     if (self.updateDataTask) {
