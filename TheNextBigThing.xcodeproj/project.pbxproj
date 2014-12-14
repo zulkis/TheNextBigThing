@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13793BF71A3C97F600605858 /* ITBPostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13793BF51A3C97F600605858 /* ITBPostTableViewCell.m */; };
+		13793BF81A3C97F600605858 /* ITBPostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13793BF61A3C97F600605858 /* ITBPostTableViewCell.xib */; };
+		13793BFB1A3C97FC00605858 /* ITBTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13793BFA1A3C97FC00605858 /* ITBTableView.m */; };
+		13D140A71A3CCEE20046CEE9 /* ITBLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D140A61A3CCEE20046CEE9 /* ITBLink.m */; };
+		13D140AA1A3CD0AC0046CEE9 /* NSManagedObject+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D140A91A3CD0AC0046CEE9 /* NSManagedObject+Extension.m */; };
 		13D8D33B1A3B2E1A00820CEC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D33A1A3B2E1A00820CEC /* main.m */; };
 		13D8D33E1A3B2E1A00820CEC /* ITBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D33D1A3B2E1A00820CEC /* ITBAppDelegate.m */; };
 		13D8D3441A3B2E1A00820CEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13D8D3421A3B2E1A00820CEC /* Main.storyboard */; };
@@ -18,13 +23,12 @@
 		13D8D36C1A3B2E9400820CEC /* ITBPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3681A3B2E9400820CEC /* ITBPostsViewController.m */; };
 		13D8D3701A3B304300820CEC /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13D8D36F1A3B304300820CEC /* CoreData.framework */; };
 		13D8D3741A3B319400820CEC /* storage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3721A3B319400820CEC /* storage.xcdatamodeld */; };
-		13D8D37D1A3B334D00820CEC /* ITBPostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D37C1A3B334D00820CEC /* ITBPostTableViewCell.m */; };
 		13D8D3821A3B3E4000820CEC /* ITBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3811A3B3E4000820CEC /* ITBUser.m */; };
-		13D8D3851A3B3E4000820CEC /* ITBMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3841A3B3E4000820CEC /* ITBMessage.m */; };
+		13D8D3851A3B3E4000820CEC /* ITBPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3841A3B3E4000820CEC /* ITBPost.m */; };
 		13D8D3891A3B4BDA00820CEC /* ITBPostsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3881A3B4BDA00820CEC /* ITBPostsDataSource.m */; };
 		13D8D38C1A3B4C4200820CEC /* ITBBaseEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D38B1A3B4C4200820CEC /* ITBBaseEntity.m */; };
 		13D8D3901A3B4CD000820CEC /* ITBBaseEntity+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D38F1A3B4CD000820CEC /* ITBBaseEntity+Extension.m */; };
-		13D8D3931A3B4D6F00820CEC /* ITBMessage+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3921A3B4D6F00820CEC /* ITBMessage+Extension.m */; };
+		13D8D3931A3B4D6F00820CEC /* ITBPost+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3921A3B4D6F00820CEC /* ITBPost+Extension.m */; };
 		13D8D3961A3B4D7F00820CEC /* ITBUser+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D8D3951A3B4D7F00820CEC /* ITBUser+Extension.m */; };
 		309BE7A6FB2B72CA4C756AD8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 328D68BC640369FC6FAC5F52 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -40,6 +44,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		13793BF41A3C97F600605858 /* ITBPostTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITBPostTableViewCell.h; sourceTree = "<group>"; };
+		13793BF51A3C97F600605858 /* ITBPostTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITBPostTableViewCell.m; sourceTree = "<group>"; };
+		13793BF61A3C97F600605858 /* ITBPostTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ITBPostTableViewCell.xib; sourceTree = "<group>"; };
+		13793BF91A3C97FC00605858 /* ITBTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITBTableView.h; sourceTree = "<group>"; };
+		13793BFA1A3C97FC00605858 /* ITBTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITBTableView.m; sourceTree = "<group>"; };
+		13D140A51A3CCEE20046CEE9 /* ITBLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ITBLink.h; path = TheNextBigThing/Classes/Model/Entities/ITBLink.h; sourceTree = SOURCE_ROOT; };
+		13D140A61A3CCEE20046CEE9 /* ITBLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ITBLink.m; path = TheNextBigThing/Classes/Model/Entities/ITBLink.m; sourceTree = SOURCE_ROOT; };
+		13D140A81A3CD0AC0046CEE9 /* NSManagedObject+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+Extension.h"; sourceTree = "<group>"; };
+		13D140A91A3CD0AC0046CEE9 /* NSManagedObject+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+Extension.m"; sourceTree = "<group>"; };
 		13D8D3351A3B2E1A00820CEC /* TheNextBigThing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheNextBigThing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13D8D3391A3B2E1A00820CEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13D8D33A1A3B2E1A00820CEC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -61,20 +74,18 @@
 		13D8D36E1A3B300E00820CEC /* thenextbigthing-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "thenextbigthing-Prefix.pch"; path = "SupportingFiles/thenextbigthing-Prefix.pch"; sourceTree = "<group>"; };
 		13D8D36F1A3B304300820CEC /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		13D8D3731A3B319400820CEC /* storage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = storage.xcdatamodel; sourceTree = "<group>"; };
-		13D8D37B1A3B334D00820CEC /* ITBPostTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITBPostTableViewCell.h; sourceTree = "<group>"; };
-		13D8D37C1A3B334D00820CEC /* ITBPostTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITBPostTableViewCell.m; sourceTree = "<group>"; };
 		13D8D3801A3B3E4000820CEC /* ITBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ITBUser.h; path = TheNextBigThing/Classes/Model/Entities/ITBUser.h; sourceTree = SOURCE_ROOT; };
 		13D8D3811A3B3E4000820CEC /* ITBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ITBUser.m; path = TheNextBigThing/Classes/Model/Entities/ITBUser.m; sourceTree = SOURCE_ROOT; };
-		13D8D3831A3B3E4000820CEC /* ITBMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ITBMessage.h; path = TheNextBigThing/Classes/Model/Entities/ITBMessage.h; sourceTree = SOURCE_ROOT; };
-		13D8D3841A3B3E4000820CEC /* ITBMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ITBMessage.m; path = TheNextBigThing/Classes/Model/Entities/ITBMessage.m; sourceTree = SOURCE_ROOT; };
+		13D8D3831A3B3E4000820CEC /* ITBPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ITBPost.h; path = TheNextBigThing/Classes/Model/Entities/ITBPost.h; sourceTree = SOURCE_ROOT; };
+		13D8D3841A3B3E4000820CEC /* ITBPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ITBPost.m; path = TheNextBigThing/Classes/Model/Entities/ITBPost.m; sourceTree = SOURCE_ROOT; };
 		13D8D3871A3B4BDA00820CEC /* ITBPostsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITBPostsDataSource.h; sourceTree = "<group>"; };
 		13D8D3881A3B4BDA00820CEC /* ITBPostsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITBPostsDataSource.m; sourceTree = "<group>"; };
 		13D8D38A1A3B4C4200820CEC /* ITBBaseEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITBBaseEntity.h; sourceTree = "<group>"; };
 		13D8D38B1A3B4C4200820CEC /* ITBBaseEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITBBaseEntity.m; sourceTree = "<group>"; };
 		13D8D38E1A3B4CD000820CEC /* ITBBaseEntity+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ITBBaseEntity+Extension.h"; sourceTree = "<group>"; };
 		13D8D38F1A3B4CD000820CEC /* ITBBaseEntity+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ITBBaseEntity+Extension.m"; sourceTree = "<group>"; };
-		13D8D3911A3B4D6F00820CEC /* ITBMessage+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ITBMessage+Extension.h"; sourceTree = "<group>"; };
-		13D8D3921A3B4D6F00820CEC /* ITBMessage+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ITBMessage+Extension.m"; sourceTree = "<group>"; };
+		13D8D3911A3B4D6F00820CEC /* ITBPost+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ITBPost+Extension.h"; sourceTree = "<group>"; };
+		13D8D3921A3B4D6F00820CEC /* ITBPost+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ITBPost+Extension.m"; sourceTree = "<group>"; };
 		13D8D3941A3B4D7F00820CEC /* ITBUser+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ITBUser+Extension.h"; sourceTree = "<group>"; };
 		13D8D3951A3B4D7F00820CEC /* ITBUser+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ITBUser+Extension.m"; sourceTree = "<group>"; };
 		1F4A471937C2E834E2E67967 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -102,6 +113,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		13793BF31A3C97F600605858 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				13793BF41A3C97F600605858 /* ITBPostTableViewCell.h */,
+				13793BF51A3C97F600605858 /* ITBPostTableViewCell.m */,
+				13793BF61A3C97F600605858 /* ITBPostTableViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		13D8D32C1A3B2E1A00820CEC = {
 			isa = PBXGroup;
 			children = (
@@ -228,8 +249,10 @@
 			children = (
 				13D8D38A1A3B4C4200820CEC /* ITBBaseEntity.h */,
 				13D8D38B1A3B4C4200820CEC /* ITBBaseEntity.m */,
-				13D8D3831A3B3E4000820CEC /* ITBMessage.h */,
-				13D8D3841A3B3E4000820CEC /* ITBMessage.m */,
+				13D8D3831A3B3E4000820CEC /* ITBPost.h */,
+				13D8D3841A3B3E4000820CEC /* ITBPost.m */,
+				13D140A51A3CCEE20046CEE9 /* ITBLink.h */,
+				13D140A61A3CCEE20046CEE9 /* ITBLink.m */,
 				13D8D3801A3B3E4000820CEC /* ITBUser.h */,
 				13D8D3811A3B3E4000820CEC /* ITBUser.m */,
 			);
@@ -239,8 +262,9 @@
 		13D8D3761A3B32FC00820CEC /* View */ = {
 			isa = PBXGroup;
 			children = (
-				13D8D37B1A3B334D00820CEC /* ITBPostTableViewCell.h */,
-				13D8D37C1A3B334D00820CEC /* ITBPostTableViewCell.m */,
+				13793BF91A3C97FC00605858 /* ITBTableView.h */,
+				13793BFA1A3C97FC00605858 /* ITBTableView.m */,
+				13793BF31A3C97F600605858 /* Cell */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -259,10 +283,12 @@
 			children = (
 				13D8D38E1A3B4CD000820CEC /* ITBBaseEntity+Extension.h */,
 				13D8D38F1A3B4CD000820CEC /* ITBBaseEntity+Extension.m */,
-				13D8D3911A3B4D6F00820CEC /* ITBMessage+Extension.h */,
-				13D8D3921A3B4D6F00820CEC /* ITBMessage+Extension.m */,
+				13D8D3911A3B4D6F00820CEC /* ITBPost+Extension.h */,
+				13D8D3921A3B4D6F00820CEC /* ITBPost+Extension.m */,
 				13D8D3941A3B4D7F00820CEC /* ITBUser+Extension.h */,
 				13D8D3951A3B4D7F00820CEC /* ITBUser+Extension.m */,
+				13D140A81A3CD0AC0046CEE9 /* NSManagedObject+Extension.h */,
+				13D140A91A3CD0AC0046CEE9 /* NSManagedObject+Extension.m */,
 			);
 			path = "Entities+Category";
 			sourceTree = "<group>";
@@ -362,6 +388,7 @@
 				13D8D3441A3B2E1A00820CEC /* Main.storyboard in Resources */,
 				13D8D3491A3B2E1A00820CEC /* LaunchScreen.xib in Resources */,
 				13D8D3461A3B2E1A00820CEC /* Images.xcassets in Resources */,
+				13793BF81A3C97F600605858 /* ITBPostTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,19 +440,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				13D8D36C1A3B2E9400820CEC /* ITBPostsViewController.m in Sources */,
+				13D140AA1A3CD0AC0046CEE9 /* NSManagedObject+Extension.m in Sources */,
 				13D8D38C1A3B4C4200820CEC /* ITBBaseEntity.m in Sources */,
 				13D8D3961A3B4D7F00820CEC /* ITBUser+Extension.m in Sources */,
-				13D8D3851A3B3E4000820CEC /* ITBMessage.m in Sources */,
-				13D8D37D1A3B334D00820CEC /* ITBPostTableViewCell.m in Sources */,
+				13D8D3851A3B3E4000820CEC /* ITBPost.m in Sources */,
 				13D8D3821A3B3E4000820CEC /* ITBUser.m in Sources */,
+				13793BFB1A3C97FC00605858 /* ITBTableView.m in Sources */,
 				13D8D3741A3B319400820CEC /* storage.xcdatamodeld in Sources */,
 				13D8D36B1A3B2E9400820CEC /* ITBStorageManager.m in Sources */,
 				13D8D3901A3B4CD000820CEC /* ITBBaseEntity+Extension.m in Sources */,
 				13D8D3891A3B4BDA00820CEC /* ITBPostsDataSource.m in Sources */,
-				13D8D3931A3B4D6F00820CEC /* ITBMessage+Extension.m in Sources */,
+				13D8D3931A3B4D6F00820CEC /* ITBPost+Extension.m in Sources */,
 				13D8D33E1A3B2E1A00820CEC /* ITBAppDelegate.m in Sources */,
 				13D8D33B1A3B2E1A00820CEC /* main.m in Sources */,
+				13793BF71A3C97F600605858 /* ITBPostTableViewCell.m in Sources */,
 				13D8D36A1A3B2E9400820CEC /* NSManagedObjectContext+Saving.m in Sources */,
+				13D140A71A3CCEE20046CEE9 /* ITBLink.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -548,6 +578,7 @@
 			baseConfigurationReference = 6457DAD7455E9500BAAE24C8 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = "TheNextBigThing/SupportingFiles/thenextbigthing-Prefix.pch";
 				INFOPLIST_FILE = TheNextBigThing/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -560,6 +591,7 @@
 			baseConfigurationReference = 1F4A471937C2E834E2E67967 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = "TheNextBigThing/SupportingFiles/thenextbigthing-Prefix.pch";
 				INFOPLIST_FILE = TheNextBigThing/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -12,7 +12,7 @@
 #import "ITBBaseEntity+Extension.h"
 #import "ITBStorageManager.h"
 
-#import "ITBMessage+Extension.h"
+#import "ITBPost+Extension.h"
 
 #import "AFHTTPSessionManager.h"
 #import "AFHTTPRequestOperation.h"
@@ -47,8 +47,6 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
 @property (nonatomic, strong) NSTimer *updateTimer;
 @property (nonatomic, strong) NSDate *backgroundEnteringDate;
 
-@property (nonatomic, strong, readwrite) NSMutableArray *dataSourceArray;
-
 @end
 
 @implementation ITBPostsDataSource
@@ -62,7 +60,9 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
     self = [super init];
     
     if (self) {
-        _loadingPageSize = 20;
+        _loadingPageSize = 100;
+        _cachedHeights = [NSMutableDictionary new];
+        
         NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"identifier"];
         configuration.HTTPAdditionalHeaders = @{@"Authorization": @"Bearer AQAAAAAADGrdVFberCBgUAzuQt1brrJqk5-sH4uH7E8-kLlFAWDwTr6oSg6QipQ45BVBBcw0QdjM-no6mtllYup39NmUeO3wpg"};
         _sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://api.app.net"]
@@ -125,9 +125,10 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
     self.updating = YES;
     
     self.updateDataTask = [_sessionManager GET:@"posts/stream/global"
-                                    parameters:@{@"count":@20}
+                                    parameters:@{@"count":@(self.loadingPageSize)}
                                        success:^(NSURLSessionDataTask *task, id responseObject) {
                                            [[self class] clearLoadedEntities];
+                                           [self.cachedHeights removeAllObjects];
                                            [self parseRequestResponse:responseObject[@"data"] meta:responseObject[@"meta"] completion:^(NSUInteger parsedCount) {
                                                
                                            }];
@@ -149,9 +150,9 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
     
     self.loadingOneMorePage = YES;
     
-    ITBMessage *message = [ITBMessage findLastWithPredicate:nil inContext:[ITBStorageManager sharedInstance].mainThreadContext];
+    ITBPost *message = [ITBPost findLastWithPredicate:nil inContext:[ITBStorageManager sharedInstance].mainThreadContext];
     self.updateDataTask = [_sessionManager GET:@"posts/stream/global"
-                                    parameters:@{@"count":@20, @"before_id":message.identifier}
+                                    parameters:@{@"count":@10000, @"before_id":message.identifier}
                                        success:^(NSURLSessionDataTask *task, id responseObject) {
                                            [self parseRequestResponse:responseObject[@"data"] meta:responseObject[@"meta"] completion:^(NSUInteger parsedCount) {
 
@@ -225,7 +226,7 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
         // create id->task map for comfortable search for creation of newcomes
         NSMutableDictionary *idEntityDictionary = [NSMutableDictionary dictionary];
         
-        for (ITBMessage *entity in existedObjects) {
+        for (ITBPost *entity in existedObjects) {
             // In case of very bad SOMETHING happened(critical crash for example) - we need to force remove all possible duplicates.
             if (idEntityDictionary[entity.identifier]) {
                 [privateContext deleteObject:entity];
@@ -246,7 +247,7 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
         for (NSUInteger i = 0; i < dictionariesArray.count; i++) {
             NSMutableDictionary *dictionary = dictionariesArray[i];
             
-            ITBMessage *message = idEntityDictionary[dictionary[idKey]];
+            ITBPost *message = idEntityDictionary[dictionary[idKey]];
             if (!message) {
                 message = [[class alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:privateContext];
                 
@@ -264,7 +265,7 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
          */
         NSArray *oldObjects = [idEntityDictionary allValues];
         
-        for (ITBMessage *entity in oldObjects) {
+        for (ITBPost *entity in oldObjects) {
             [privateContext deleteObject:entity];
         }
         /*
@@ -283,7 +284,7 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
             if (executeError) {
                 ERROR_TO_LOG(@"%@", executeError);
             }
-            for (ITBMessage *entity in objectsToDelete) {
+            for (ITBPost *entity in objectsToDelete) {
                 [privateContext deleteObject:entity];
             }
         }
@@ -315,10 +316,6 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
 
 #pragma mark - Accessors
 
-- (NSArray *)dataSourceArray {
-    return _fetchedResultsController.fetchedObjects;
-}
-
 - (ITBStorageManager *)storageManager {
     return [ITBStorageManager sharedInstance];
 }
@@ -348,7 +345,7 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
 - (void)_createFetchedResultsController
 {
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:[self class].entityName];
-    fetchRequest.fetchBatchSize = 20;
+    fetchRequest.fetchBatchSize = 10;
     fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"identifier" ascending:NO]];
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                     managedObjectContext:self.storageManager.mainThreadContext
@@ -375,7 +372,7 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
 }
 
 + (NSString *)entityName {
-    return [ITBMessage entityName];
+    return [ITBPost entityName];
 }
 
 @end

@@ -9,8 +9,9 @@
 #import "ITBPostsViewController.h"
 #import "ITBPostsDataSource.h"
 
+#import "ITBTableView.h"
 #import "ITBPostTableViewCell.h"
-#import "ITBMessage.h"
+#import "ITBPost.h"
 
 static NSInteger ITBPostsSectionLoadingMoreIndicator = 1;
 static CGFloat ITBPostsEstimatedCellHeight = 60.f;
@@ -18,6 +19,8 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
 @interface ITBPostsViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic) BOOL beganUpdates;
+
+@property (nonatomic, weak) IBOutlet ITBTableView *tableView;
 
 @property (nonatomic, strong) UIView *bottomLoadingIndicatorView;
 
@@ -40,6 +43,8 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([ITBPostTableViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:NSStringFromClass([ITBPostTableViewCell class])];
+    
     [self.postsDataSource addObserver:self
                       forKeyPath:ITBUpdatingKeyPath
                          options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
@@ -49,19 +54,16 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
                          options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
                          context:nil];
     
-    self.refreshControl = [UIRefreshControl new];
-    
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView.estimatedRowHeight = ITBPostsEstimatedCellHeight;
-    
+    [self.tableView.refreshControl addTarget:self action:@selector(refreshControlWantsUpdate:) forControlEvents:UIControlEventValueChanged];
+
+
     self.postsDataSource.fetchedResultsController.delegate = self;
     weakify(self)
     self.postsDataSource.onDidEndPerformFetch = ^{
         strongify(self)
         [self.tableView reloadData];
     };
-    [self.postsDataSource update];
-    // Do any additional setup after loading the view, typically from a nib.
+//    [self.postsDataSource update];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -84,15 +86,15 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
 #pragma mark - Private
 
 - (void)refreshControlWantsUpdate:(UIRefreshControl *)refreshControl {
-    [self.refreshControl beginRefreshing];
+    [self.tableView.refreshControl beginRefreshing];
     [self.postsDataSource update];
 }
 
 - (void)_updateLoadingIndicatorWithValue:(BOOL)value {
     if (value) {
-        [self.refreshControl beginRefreshing];
+        [self.tableView.refreshControl beginRefreshing];
     } else {
-        [self.refreshControl endRefreshing];
+        [self.tableView.refreshControl endRefreshing];
     }
 }
 
@@ -123,16 +125,45 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
     self.tableView.tableFooterView = nil;
 }
 
-//- (void)_updateLoadingIndicatorWithValue:(BOOL)value {
-//    if (value) {
-//    } else {
-//        NSArray *fetchedObject = self.postsDataSource.dataSourceArray;
-//        _noContentLabel.hidden = (fetchedObject.count > 0);
-//        _tableView.separatorColor = fetchedObject.count > 0 ? [UIColor tableViewSeparatorColor]:[UIColor clearColor];
-//    }
-//}
+- (void)_configureCell:(ITBPostTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    ITBPost *post = self.postsDataSource[indexPath];
+    
+    cell.post = post;
+}
 
 #pragma mark - UITableViewDataSource
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *reuseIdentifier = NSStringFromClass([ITBPostTableViewCell class]);
+    ITBPostTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+    
+    [self _configureCell:cell atIndexPath:indexPath];
+    
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static ITBPostTableViewCell *sizingCell;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sizingCell = [ITBPostTableViewCell new];
+    });
+    
+    NSNumber *ix = @(indexPath.row);
+    
+    if (!self.postsDataSource.cachedHeights[ix]) {
+        [sizingCell setNeedsUpdateConstraints];
+        [self _configureCell:sizingCell atIndexPath:indexPath];
+        
+        CGFloat cellHeight = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingExpandedSize].height + 1;
+        
+        self.postsDataSource.cachedHeights[ix] = @(cellHeight);
+    }
+
+    return [self.postsDataSource.cachedHeights[ix] floatValue];
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -144,15 +175,6 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
     return [self.postsDataSource numberRowsInSection:section];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ITBPostTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ITBPostTableViewCell class])
-                                           forIndexPath:indexPath];
-    ITBMessage *message = self.postsDataSource[indexPath];
-    cell.textView.text = message.text;
-//    [cell updateConstraints];
-    return cell;
-}
-
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(ITBPostTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -160,7 +182,7 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
         (indexPath.row >= ([self.postsDataSource numberRowsInSection:0] - 5) || [self.postsDataSource numberRowsInSection:0] < 5) && // we are in the end of list
         !self.postsDataSource.loadingOneMorePage &&
         !self.postsDataSource.updating) { // we are not loading
-        // we can't insert section while we receiving delegate messages, we need do outside of it
+
         [self.postsDataSource loadOneMorePage];
     }
 }
@@ -192,15 +214,14 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 }
 
-
-#pragma mark - NSFetchedResultsControllerDelegate
-
+//#pragma mark - NSFetchedResultsControllerDelegate
+//
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
     [self.tableView beginUpdates];
     self.beganUpdates = YES;
 }
-
+//
 - (void)controller:(NSFetchedResultsController *)controller
   didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex
@@ -247,10 +268,13 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
             break;
     }
 }
-
+//
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    if (self.beganUpdates) [self.tableView endUpdates];
+    if (self.beganUpdates) {
+        [self.tableView endUpdates];
+    }
+//    [self.tableView reloadData];
 }
 
 @end

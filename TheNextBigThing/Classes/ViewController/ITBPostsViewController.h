@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ITBPostsViewController : UITableViewController
+@interface ITBPostsViewController : UIViewController
 
 
 @end

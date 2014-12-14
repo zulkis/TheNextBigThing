@@ -8,21 +8,21 @@
 
 #import "ITBBaseEntity+Extension.h"
 
-@class ITBMessage;
+@class ITBPost;
 
 @interface ITBUser : ITBBaseEntity
 
 @property (nonatomic, retain) NSString * username;
 @property (nonatomic, retain) NSString * fullname;
 @property (nonatomic, retain) NSString * avatarImageUrl;
-@property (nonatomic, retain) NSSet *messages;
+@property (nonatomic, retain) NSSet *posts;
 @end
 
 @interface ITBUser (CoreDataGeneratedAccessors)
 
-- (void)addMessagesObject:(ITBMessage *)value;
-- (void)removeMessagesObject:(ITBMessage *)value;
-- (void)addMessages:(NSSet *)values;
-- (void)removeMessages:(NSSet *)values;
+- (void)addPostsObject:(ITBPost *)value;
+- (void)removePostsObject:(ITBPost *)value;
+- (void)addPosts:(NSSet *)values;
+- (void)removePosts:(NSSet *)values;
 
 @end

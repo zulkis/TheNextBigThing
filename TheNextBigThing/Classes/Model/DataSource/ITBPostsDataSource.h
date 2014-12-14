@@ -18,16 +18,16 @@ extern NSString * const ITBLoadingOneMoreKeyPath;
 - (void)prepareWork;
 - (void)reset;
 
-@property (nonatomic) NSUInteger loadingPageSize; // Default: 20
+@property (nonatomic) NSUInteger loadingPageSize; // Default: 100
 
 @property (nonatomic, assign, readonly) BOOL updating;
 @property (nonatomic, assign, readonly) BOOL loadingOneMorePage;
 @property (nonatomic, assign) BOOL canBeLoadMore;
 
+@property (nonatomic, strong) NSMutableDictionary *cachedHeights;
+
 @property (nonatomic, weak, readonly) NSURLSessionDataTask *updateDataTask;
 @property (nonatomic, weak, readonly) NSURLSessionDataTask *loadOneMorePageDataTask;
-
-@property (nonatomic, retain, readonly) NSArray *dataSourceArray;
 
 - (NSUInteger)numberOfSections;
 - (NSUInteger)numberRowsInSection:(NSUInteger)section;

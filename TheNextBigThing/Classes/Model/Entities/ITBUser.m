@@ -7,7 +7,7 @@
 //
 
 #import "ITBUser.h"
-#import "ITBMessage.h"
+#import "ITBPost.h"
 
 
 @implementation ITBUser
@@ -16,6 +16,6 @@
 @dynamic fullname;
 @dynamic avatarImageUrl;
 
-@dynamic messages;
+@dynamic posts;
 
 @end

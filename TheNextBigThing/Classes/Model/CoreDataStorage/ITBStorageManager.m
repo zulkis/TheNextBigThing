@@ -75,7 +75,8 @@ static NSString *const DBFileName = @"storage.sqlite";
     
     NSError *error = nil;
     _lazyLoadPersistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];
-    NSDictionary *storeOptions = @{ NSPersistentStoreFileProtectionKey : NSFileProtectionComplete };
+    NSDictionary *storeOptions = @{ NSPersistentStoreFileProtectionKey : NSFileProtectionComplete,
+                                    NSSQLitePragmasOption: @{@"journal_mode": @"DELETE"}};
     NSPersistentStore *store = [_lazyLoadPersistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:storeOptions error:&error];
     if (store == nil) {
         ERROR_TO_LOG(@"Unresolved error %@, %@", error, [error userInfo]);

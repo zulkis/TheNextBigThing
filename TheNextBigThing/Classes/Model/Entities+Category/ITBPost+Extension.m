@@ -1,19 +1,25 @@
 //
-//  ITBMessage+Extension.m
+//  ITBPost+Extension.m
 //  TheNextBigThing
 //
 //  Created by Alexey Minaev on 12/12/14.
 //  Copyright (c) 2014 IttyBitty. All rights reserved.
 //
 
-#import "ITBMessage+Extension.h"
+#import "ITBPost+Extension.h"
 #import "ITBUser+Extension.h"
+#import "ITBLink.h"
 
 static NSString * const ITBTextKey = @"text";
 static NSString * const ITBCreatedAtKey = @"created_at";
 static NSString * const ITBUserKey = @"user";
 
-@implementation ITBMessage (Extension)
+static NSString * const ITBLinksKeyPath = @"entities.links";
+static NSString * const ITBLinkLocationKey = @"pos";
+static NSString * const ITBLinkLengthKey = @"len";
+static NSString * const ITBLinkUrlKey = @"url";
+
+@implementation ITBPost (Extension)
 
 + (NSDateFormatter *)createdAtDateFormatter
 {
@@ -27,11 +33,38 @@ static NSString * const ITBUserKey = @"user";
     return dateFormatter;
 }
 
+
+/*
+ "entities": {
+ "mentions": [],
+ "hashtags": [],
+ "links": [
+ {
+ "url": "http://on.thestar.com/1A4z6aN",
+ "text": "http://on.thestar.com/1A4z6aN",
+ "pos": 49,
+ "len": 29
+ }
+ ]
+ },
+ */
 - (void)updateWithDictionary:(NSDictionary *)dictionary {
     [super updateWithDictionary:dictionary];
     
     self.text = dictionary[ITBTextKey];
     self.createdAt = [[[self class] createdAtDateFormatter] dateFromString:dictionary[ITBCreatedAtKey]];
+    
+    if (![self.links count]) {
+        NSArray *links = [dictionary valueForKeyPath:ITBLinksKeyPath];
+        [links enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
+            ITBLink *link = [ITBLink createInContext:self.managedObjectContext];
+            link.location = obj[ITBLinkLocationKey];
+            link.length = obj[ITBLinkLengthKey];
+            link.url = obj[ITBLinkUrlKey];
+            
+            [self addLinksObject:link];
+        }];
+    }
     
     NSDictionary *userDict = dictionary[ITBUserKey];
     NSString *userId = userDict[ITBIdentifierKey];
@@ -41,5 +74,7 @@ static NSString * const ITBUserKey = @"user";
         self.user = user;
     }
 }
+
+
 
 @end

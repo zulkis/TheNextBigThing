@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class ITBPost;
+
 @interface ITBPostTableViewCell : UITableViewCell
 
-@property (nonatomic, weak) IBOutlet UITextView *textView;
+@property (nonatomic, weak) ITBPost *post;
 
 @end
