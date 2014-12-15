@@ -195,11 +195,14 @@ static NSTimeInterval ITBResetFeedTimeInterval = 600; // 10 Minutes
 - (UIView *)bottomLoadingIndicatorView {
     if (!_bottomLoadingIndicatorView) {
         _bottomLoadingIndicatorView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.tableView.bounds), ITBPostsEstimatedCellHeight)];
+        _bottomLoadingIndicatorView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        activityIndicator.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         activityIndicator.center = _bottomLoadingIndicatorView.center;
         [activityIndicator startAnimating];
         [_bottomLoadingIndicatorView addSubview:activityIndicator];
     }
+    
     return _bottomLoadingIndicatorView;
 }
 
