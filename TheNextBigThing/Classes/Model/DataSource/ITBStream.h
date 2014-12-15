@@ -18,7 +18,7 @@ extern NSString * const ITBLoadingOneMoreKeyPath;
 @property (nonatomic, weak, readonly) ITBStorageManager *storageManager;
 
 // TODO: need to store it before updating in case of changing the page size
-@property (nonatomic) NSUInteger loadingPageSize; // Default: 100
+@property (nonatomic) NSInteger loadingPageSize; // Default: 20
 
 @property (nonatomic, assign, readonly) BOOL updating;
 @property (nonatomic, assign, readonly) BOOL loadingOneMorePage;
