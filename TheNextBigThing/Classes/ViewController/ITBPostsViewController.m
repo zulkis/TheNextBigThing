@@ -23,6 +23,8 @@
 static CGFloat ITBPostsEstimatedCellHeight = 60.f;
 static NSTimeInterval ITBResetFeedTimeInterval = 600; // 10 Minutes
 
+static NSUInteger ITBMaximumPostsToReloadWithAnimation = 1000;
+
 @interface ITBPostsViewController () <ITBPostsDataSourceViewModel, UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic) BOOL beganUpdates;
@@ -42,6 +44,8 @@ static NSTimeInterval ITBResetFeedTimeInterval = 600; // 10 Minutes
 
 @property (nonatomic, strong) Reachability *reachability;
 @property (nonatomic, weak) UIAlertView *internetConnectionAlertView;
+
+@property (nonatomic) BOOL shouldUpdateWithAnimation;
 
 @end
 
@@ -90,8 +94,6 @@ static NSTimeInterval ITBResetFeedTimeInterval = 600; // 10 Minutes
                      context:nil];
     
     [self.tableView.refreshControl addTarget:self action:@selector(_refreshControlWantsUpdate:) forControlEvents:UIControlEventValueChanged];
-    
-    self.postsDataSource.fetchedResultsController.delegate = self;
     
     [self _reloadStream];
 }
@@ -149,7 +151,7 @@ static NSTimeInterval ITBResetFeedTimeInterval = 600; // 10 Minutes
     }
 }
 
-- (void)_applicationDidBecomeActive:(NSNotification *)note {
+- (void)_tryToClearAndReloadPostsData {
     if (self.backgroundEnteringDate) {
         NSTimeInterval lastTime = [self.backgroundEnteringDate timeIntervalSince1970];
         NSTimeInterval nowTime = [[NSDate date] timeIntervalSince1970];
@@ -160,6 +162,10 @@ static NSTimeInterval ITBResetFeedTimeInterval = 600; // 10 Minutes
             [self.stream reloadData];
         }
     }
+}
+
+- (void)_applicationDidBecomeActive:(NSNotification *)note {
+    [self _tryToClearAndReloadPostsData];
 }
 
 - (void)applicationDidEnterBackground:(NSNotification *)notification
@@ -194,6 +200,7 @@ static NSTimeInterval ITBResetFeedTimeInterval = 600; // 10 Minutes
                                                                     managedObjectContext:[ITBStorageManager sharedInstance].mainThreadContext
                                                                       sectionNameKeyPath:nil
                                                                                cacheName:@"cacheName"];
+    _fetchedResultsController.delegate = self;
 }
 
 - (void)_refreshControlWantsUpdate:(UIRefreshControl *)refreshControl {
@@ -268,7 +275,7 @@ static NSTimeInterval ITBResetFeedTimeInterval = 600; // 10 Minutes
 
 - (void)_performTimeForPostsStartUpdate {
     NSArray *visibleCells = [self.tableView visibleCells];
-    int count = [visibleCells count];
+    NSUInteger count = [visibleCells count];
     for (int i = 0; i < count; i ++) {
         ITBPostTableViewCell *postCell = visibleCells[i];
         [postCell updateTimeLabel];
@@ -324,7 +331,7 @@ static NSTimeInterval ITBResetFeedTimeInterval = 600; // 10 Minutes
     if (successfullyFetchedNewsFromDatabase == NO) {
         NSLog(@"Error occurred while fetching feeds from database: %@", error.localizedDescription);
     }
-    
+    self.shouldUpdateWithAnimation = [self.fetchedResultsController fetchedObjects].count < ITBMaximumPostsToReloadWithAnimation;
     [self.tableView reloadData];
 }
 
@@ -387,8 +394,10 @@ static NSTimeInterval ITBResetFeedTimeInterval = 600; // 10 Minutes
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
-    [self.tableView beginUpdates];
-    self.beganUpdates = YES;
+    if (self.shouldUpdateWithAnimation) {
+        [self.tableView beginUpdates];
+        self.beganUpdates = YES;
+    }
 }
 
 - (void)controller:(NSFetchedResultsController *)controller
@@ -417,31 +426,43 @@ static NSTimeInterval ITBResetFeedTimeInterval = 600; // 10 Minutes
      forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath
 {
-    switch(type)
-    {
-        case NSFetchedResultsChangeInsert:
-            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeUpdate:
-            [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeMove:
-            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
+    if (self.shouldUpdateWithAnimation) {
+        switch(type)
+        {
+            case NSFetchedResultsChangeInsert:
+                [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+                break;
+                
+            case NSFetchedResultsChangeDelete:
+                [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                break;
+                
+            case NSFetchedResultsChangeUpdate:
+                [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                break;
+                
+            case NSFetchedResultsChangeMove:
+                [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+                break;
+        }
     }
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    if (self.beganUpdates) {
+    if (self.beganUpdates && self.shouldUpdateWithAnimation) {
         [self.tableView endUpdates];
+    } else {
+        /*
+         In case of tens of thousands posts -endUpdates causes offfscreen cells reloading. And VERY bad performance issues.
+         For now I dont know how to disable it.
+         So just reloading table view. It'll be much faster
+         */
+        [self.tableView reloadData];
+    }
+    if (!self.shouldUpdateWithAnimation) {
+        self.shouldUpdateWithAnimation = [self.fetchedResultsController fetchedObjects].count < ITBMaximumPostsToReloadWithAnimation;
     }
 }
 

@@ -40,7 +40,7 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
 - (instancetype)initWithStorage:(ITBStorageManager *)storage {
     self = [super init];
     if (self) {
-        _loadingPageSize = 100;
+        _loadingPageSize = 20;
         _storageManager = storage;
         
         _fetcher = [ITBPostsFetcher new];

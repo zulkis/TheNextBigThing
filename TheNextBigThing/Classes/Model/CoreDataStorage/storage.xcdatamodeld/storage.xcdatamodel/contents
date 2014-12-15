@@ -23,7 +23,7 @@
     </entity>
     <elements>
         <element name="Link" positionX="0" positionY="0" width="128" height="103"/>
-        <element name="Post" positionX="0" positionY="0" width="128" height="135"/>
+        <element name="Post" positionX="0" positionY="0" width="128" height="133"/>
         <element name="User" positionX="0" positionY="0" width="128" height="118"/>
     </elements>
 </model>
