@@ -4,3 +4,4 @@ TODOs:
 2. Improve links detection for RTL languages
 3. Add filtering (by user for example)
 4. Implement tags support
+5. Increase CD and NSFetchedResultsController performance
