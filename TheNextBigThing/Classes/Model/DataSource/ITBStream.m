@@ -57,11 +57,14 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
     self.updating = YES;
     ITBPost *message = [ITBPost findWithHighestIdentifierInContext:self.storageManager.mainThreadContext];
     
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{@"count":@(-self.loadingPageSize)}];
+    NSMutableDictionary *params = [NSMutableDictionary new];
     __block BOOL shouldUpdateCouldSaveFlag = YES;
     if (message) {
         shouldUpdateCouldSaveFlag = NO;
         params[@"since_id"] = message.identifier;
+        params[@"count"] = @(-self.loadingPageSize);
+    } else {
+        params[@"count"] = @(self.loadingPageSize);
     }
     weakify(self)
     [_fetcher getPostsWithParams:params
