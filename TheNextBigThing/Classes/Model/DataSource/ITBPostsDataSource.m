@@ -65,7 +65,7 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
         _cachedHeights = [NSMutableDictionary new];
         _horizontalCachedHeights = [NSMutableDictionary new];
         
-        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"identifier"];
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
         configuration.HTTPAdditionalHeaders = @{@"Authorization": @"Bearer AQAAAAAADGrdVFberCBgUAzuQt1brrJqk5-sH4uH7E8-kLlFAWDwTr6oSg6QipQ45BVBBcw0QdjM-no6mtllYup39NmUeO3wpg"};
         _sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://api.app.net"]
                                                    sessionConfiguration:configuration];

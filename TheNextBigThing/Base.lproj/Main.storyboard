@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ZF6-NI-ogg">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Posts View Controller-->
@@ -28,10 +28,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="hpn-IY-Jcb" firstAttribute="top" secondItem="tOA-Bi-AhT" secondAttribute="topMargin" id="J6F-sj-dIL"/>
-                            <constraint firstItem="hpn-IY-Jcb" firstAttribute="leading" secondItem="tOA-Bi-AhT" secondAttribute="leadingMargin" constant="-16" id="PEN-tu-NFt"/>
-                            <constraint firstItem="3vF-Qg-pfq" firstAttribute="top" secondItem="hpn-IY-Jcb" secondAttribute="bottom" id="jrV-gb-cL6"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="hpn-IY-Jcb" secondAttribute="trailing" constant="-16" id="qFt-UK-fWz"/>
+                            <constraint firstItem="hpn-IY-Jcb" firstAttribute="top" secondItem="tOA-Bi-AhT" secondAttribute="top" id="BHz-xf-Hhc"/>
+                            <constraint firstItem="hpn-IY-Jcb" firstAttribute="leading" secondItem="tOA-Bi-AhT" secondAttribute="leading" id="jAe-2c-cuN"/>
+                            <constraint firstAttribute="trailing" secondItem="hpn-IY-Jcb" secondAttribute="trailing" id="lmC-RA-yCL"/>
+                            <constraint firstItem="hpn-IY-Jcb" firstAttribute="bottom" secondItem="3vF-Qg-pfq" secondAttribute="top" id="sVt-DV-Lk9"/>
                         </constraints>
                     </view>
                     <connections>

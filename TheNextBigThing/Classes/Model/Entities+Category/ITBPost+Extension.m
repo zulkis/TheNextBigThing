@@ -57,8 +57,6 @@ static NSString * const ITBLinkUrlKey = @"url";
         ITBUser *user = [ITBUser findOrCreateWithIdentifier:userId inContext:self.managedObjectContext];
         [user updateWithDictionary:userDict];
         self.user = user;
-    } else {
-        NSLog(@"");
     }
 }
 
