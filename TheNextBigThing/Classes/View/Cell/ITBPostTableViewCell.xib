@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ITBPostTableViewCell" rowHeight="78" id="Cst-eK-7IX" customClass="ITBPostTableViewCell">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ITBPostTableViewCell" rowHeight="80" id="Cst-eK-7IX" customClass="ITBPostTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
             <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" horizontalHuggingPriority="256" verticalHuggingPriority="256" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" tableViewCell="Cst-eK-7IX" id="ogw-Wo-ely">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" horizontalHuggingPriority="260" verticalHuggingPriority="260" horizontalCompressionResistancePriority="769" verticalCompressionResistancePriority="760" tableViewCell="Cst-eK-7IX" id="ogw-Wo-ely">
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AvatarPlaceholdeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="s6t-0e-FSG">
@@ -64,13 +65,13 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="xRQ-Z6-oI7" firstAttribute="top" secondItem="mkB-nR-3zZ" secondAttribute="bottom" constant="4.5" id="6Vi-pF-MaD"/>
+                    <constraint firstItem="mkB-nR-3zZ" firstAttribute="top" secondItem="ogw-Wo-ely" secondAttribute="topMargin" id="4Rm-fz-vbM"/>
                     <constraint firstItem="mkB-nR-3zZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bix-e1-ewf" secondAttribute="trailing" constant="8" id="7d1-gM-ePI"/>
-                    <constraint firstItem="mkB-nR-3zZ" firstAttribute="top" secondItem="ogw-Wo-ely" secondAttribute="topMargin" id="9SV-It-Fkx"/>
                     <constraint firstAttribute="trailingMargin" secondItem="mkB-nR-3zZ" secondAttribute="trailing" id="C9b-kJ-DUn"/>
                     <constraint firstItem="bix-e1-ewf" firstAttribute="height" secondItem="mkB-nR-3zZ" secondAttribute="height" id="EWI-hf-KX3"/>
                     <constraint firstItem="xRQ-Z6-oI7" firstAttribute="leading" secondItem="s6t-0e-FSG" secondAttribute="trailing" constant="8" id="G3i-A7-CAf"/>
                     <constraint firstItem="s6t-0e-FSG" firstAttribute="leading" secondItem="ogw-Wo-ely" secondAttribute="leadingMargin" id="VXd-JT-jqn"/>
+                    <constraint firstItem="xRQ-Z6-oI7" firstAttribute="top" secondItem="ogw-Wo-ely" secondAttribute="topMargin" constant="22" id="W3R-tD-bZr"/>
                     <constraint firstItem="xn8-d7-mSc" firstAttribute="trailing" secondItem="ogw-Wo-ely" secondAttribute="trailingMargin" id="Z8i-9p-RQU"/>
                     <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="s6t-0e-FSG" secondAttribute="bottom" id="jgL-Nz-xHF"/>
                     <constraint firstItem="bix-e1-ewf" firstAttribute="top" secondItem="ogw-Wo-ely" secondAttribute="topMargin" id="lto-4c-oeF"/>

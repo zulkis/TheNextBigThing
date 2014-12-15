@@ -9,26 +9,20 @@
 
 #import <Foundation/Foundation.h>
 
+@class ITBPostsDataSource;
 
-extern NSString * const ITBUpdatingKeyPath;
-extern NSString * const ITBLoadingOneMoreKeyPath;
+@protocol ITBPostsDataSourceViewModel <NSObject>
 
-@interface ITBPostsDataSource : NSObject
+@required
+- (CGFloat)widthForCellsForDataSource:(ITBPostsDataSource *)dataSource;
 
-- (void)prepareWork;
-- (void)reset;
+@end
 
-@property (nonatomic) NSUInteger loadingPageSize; // Default: 100
+@interface ITBPostsDataSource : NSObject <UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, assign, readonly) BOOL updating;
-@property (nonatomic, assign, readonly) BOOL loadingOneMorePage;
-@property (nonatomic, assign) BOOL canBeLoadMore;
+@property (nonatomic, weak) NSFetchedResultsController *fetchedResultsController;
 
-@property (nonatomic, strong) NSMutableDictionary *cachedHeights;
-@property (nonatomic, strong) NSMutableDictionary *horizontalCachedHeights;
-
-@property (nonatomic, weak, readonly) NSURLSessionDataTask *updateDataTask;
-@property (nonatomic, weak, readonly) NSURLSessionDataTask *loadOneMorePageDataTask;
+@property (nonatomic, weak) id<ITBPostsDataSourceViewModel> delegate;
 
 - (NSUInteger)numberOfSections;
 - (NSUInteger)numberRowsInSection:(NSUInteger)section;
@@ -38,15 +32,5 @@ extern NSString * const ITBLoadingOneMoreKeyPath;
 // we can use CoreBaseDataSource[NSIndexPath]
 - (id)objectForKeyedSubscript:(NSIndexPath *)indexPath;
 
-- (void)loadOneMorePage;
-- (void)update;
-
-#pragma mark - Fetches from coreData
-
-@property (nonatomic, strong, readonly) NSFetchedResultsController *fetchedResultsController;
-
-@property (nonatomic, copy) void(^onDidEndPerformFetch)();
-
-- (void)performFetch;
 
 @end

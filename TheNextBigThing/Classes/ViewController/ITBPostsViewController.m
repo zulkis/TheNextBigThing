@@ -8,14 +8,19 @@
 
 #import "ITBPostsViewController.h"
 #import "ITBPostsDataSource.h"
+#import "ITBStorageManager.h"
 
 #import "ITBTableView.h"
 #import "ITBPostTableViewCell.h"
-#import "ITBPost.h"
+
+#import "ITBPost+Extension.h"
+#import "ITBStream.h"
+
 
 static CGFloat ITBPostsEstimatedCellHeight = 60.f;
+static NSTimeInterval ITBResetFeedTimeInterval = 600; // 10 Minutes
 
-@interface ITBPostsViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
+@interface ITBPostsViewController () <ITBPostsDataSourceViewModel, UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic) BOOL beganUpdates;
 
@@ -27,6 +32,11 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
 
 @property (nonatomic, strong) NSTimer *updatingrTimeForPostStartTimer;
 
+@property (nonatomic, strong) NSDate *backgroundEnteringDate;
+
+@property (nonatomic, strong) ITBStream *stream;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+
 @end
 
 @implementation ITBPostsViewController
@@ -35,69 +45,125 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
     self = [super initWithCoder:aDecoder];
     
     if (self) {
-        _postsDataSource = [ITBPostsDataSource new];
+        [self _createFetchedResultsController];
+        
+        _stream = [[ITBStream alloc] initWithStorage:[ITBStorageManager sharedInstance]];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+#ifdef DEBUG
+    [self _addVersionLabel];
+#endif
+    
+    self.postsDataSource = [ITBPostsDataSource new];
+    self.postsDataSource.fetchedResultsController = _fetchedResultsController;
+    self.postsDataSource.delegate = self;
+    
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self.postsDataSource;
     
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([ITBPostTableViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:NSStringFromClass([ITBPostTableViewCell class])];
     
-    [self.postsDataSource addObserver:self
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:)
+                                                 name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_applicationDidBecomeActive:)
+                                                 name:UIApplicationDidBecomeActiveNotification object:nil];
+    
+    [self.stream addObserver:self
                            forKeyPath:ITBUpdatingKeyPath
                               options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
                               context:nil];
-    [self.postsDataSource addObserver:self
+    [self.stream addObserver:self
                            forKeyPath:ITBLoadingOneMoreKeyPath
                               options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
                               context:nil];
+    
     [self.tableView.refreshControl addTarget:self action:@selector(_refreshControlWantsUpdate:) forControlEvents:UIControlEventValueChanged];
     
-    [_postsDataSource prepareWork];
-    
-    
     self.postsDataSource.fetchedResultsController.delegate = self;
-    weakify(self)
-    self.postsDataSource.onDidEndPerformFetch = ^{
-        strongify(self)
-        [self.tableView reloadData];
-    };
+    
+    [self _reloadStream];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [self.postsDataSource update];
-    
-    [self.tableView reloadData];
-    
     [self _startUpdatingTimeForPostsStart];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [super viewDidAppear:animated];
+    [super viewWillDisappear:animated];
     [self _stopUpdatingTimeForPostsStart];
 }
 
 - (void)dealloc {
     self.tableView.delegate = nil;
     self.tableView.dataSource = nil;
+    self.postsDataSource.delegate = nil;
     
-    [self.postsDataSource removeObserver:self forKeyPath:ITBUpdatingKeyPath];
-    [self.postsDataSource removeObserver:self forKeyPath:ITBLoadingOneMoreKeyPath];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    [self.postsDataSource reset];
+    [self.stream removeObserver:self forKeyPath:ITBUpdatingKeyPath];
+    [self.stream removeObserver:self forKeyPath:ITBLoadingOneMoreKeyPath];
     
     [self _stopUpdatingTimeForPostsStart];
 }
 
 #pragma mark - Private
 
+- (void)_applicationDidBecomeActive:(NSNotification *)note {
+    if (self.backgroundEnteringDate) {
+        NSTimeInterval lastTime = [self.backgroundEnteringDate timeIntervalSince1970];
+        NSTimeInterval nowTime = [[NSDate date] timeIntervalSince1970];
+        
+        NSTimeInterval diff = (nowTime - lastTime);
+        
+        if (diff >= ITBResetFeedTimeInterval) {
+            [self.stream reloadData];
+        }
+    }
+}
+
+- (void)applicationDidEnterBackground:(NSNotification *)notification
+{
+    self.backgroundEnteringDate = [NSDate date];
+}
+
+- (void)_addVersionLabel {
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 20)];
+    label.textAlignment = NSTextAlignmentRight;
+    [self.view addSubview:label];
+    label.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[label]|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"label":label}]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[label]|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"label":label}]];
+    
+    label.text = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+    
+}
+
+- (void)_createFetchedResultsController
+{
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:[ITBPost entityName]];
+    fetchRequest.fetchBatchSize = 10;
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"identifier" ascending:NO]];
+    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                    managedObjectContext:[ITBStorageManager sharedInstance].mainThreadContext
+                                                                      sectionNameKeyPath:nil
+                                                                               cacheName:@"cacheName"];
+}
+
 - (void)_refreshControlWantsUpdate:(UIRefreshControl *)refreshControl {
     [self.tableView.refreshControl beginRefreshing];
-    [self.postsDataSource update];
+    [self.stream loadNewer];
 }
 
 - (void)_updateLoadingIndicatorWithValue:(BOOL)value {
@@ -145,10 +211,6 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
     self.tableView.tableFooterView = nil;
 }
 
-- (void)_configureCell:(ITBPostTableViewCell *)cell withPost:(ITBPost *)post {
-    cell.post = post;
-}
-
 - (void)_startUpdatingTimeForPostsStart {
     const NSTimeInterval timerTimeInterval = 10.f;
     if (!self.updatingrTimeForPostStartTimer) {
@@ -175,88 +237,60 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
     }
 }
 
-#pragma mark - UITableViewDataSource
+#pragma mark - ITBPostsDataSourceViewModel
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString *reuseIdentifier = NSStringFromClass([ITBPostTableViewCell class]);
-    ITBPostTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
-    
-    ITBPost *post = self.postsDataSource[indexPath];
-    [self _configureCell:cell withPost:post];
-    
-    return cell;
+- (CGFloat)widthForCellsForDataSource:(ITBPostsDataSource *)dataSource {
+    return CGRectGetWidth(self.tableView.frame);
 }
 
-/*
- Increaasing performance since we could have a LOT of posts in DB
- */
+#pragma mark - UITableViewDelegate
+
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ITBPost *post = self.postsDataSource[indexPath];
-    NSMutableDictionary *cachedHeights = nil;
-    if (UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
-        cachedHeights = self.postsDataSource.cachedHeights;
-    } else {
-        cachedHeights = self.postsDataSource.horizontalCachedHeights;
-    }
-    
-    if (cachedHeights[post.identifier]) {
-        return [cachedHeights[post.identifier] floatValue];
+    if ([self.postsDataSource respondsToSelector:_cmd]) {
+        return [self.postsDataSource tableView:tableView estimatedHeightForRowAtIndexPath:indexPath];
     }
     return 100;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    static ITBPostTableViewCell *sizingCell;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sizingCell = [ITBPostTableViewCell new];
-    });
-    
-    ITBPost *post = self.postsDataSource[indexPath];
-    
-    NSMutableDictionary *cachedHeights = nil;
-    if (UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
-        cachedHeights = self.postsDataSource.cachedHeights;
-    } else {
-        cachedHeights = self.postsDataSource.horizontalCachedHeights;
+    if ([self.postsDataSource respondsToSelector:_cmd]) {
+        return [self.postsDataSource tableView:tableView heightForRowAtIndexPath:indexPath];
     }
-    
-    if (!cachedHeights[post.identifier]) {
-        [sizingCell updateConstraintsWithTableViewWidth:CGRectGetWidth(self.tableView.frame)];
-        
-        [self _configureCell:sizingCell withPost:post];
-        
-        CGFloat cellHeight = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingExpandedSize].height + 1;
-        
-        cachedHeights[post.identifier] = @(cellHeight);
-    }
-    
-    return [cachedHeights[post.identifier] floatValue];
+    return 100;
 }
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return [self.postsDataSource numberOfSections];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return [self.postsDataSource numberRowsInSection:section];
-}
-
-#pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(ITBPostTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.postsDataSource.canBeLoadMore && // we can load one more page
-        (indexPath.row >= ([self.postsDataSource numberRowsInSection:0] - 5) || [self.postsDataSource numberRowsInSection:0] < 5) && // we are in the end of list
-        !self.postsDataSource.loadingOneMorePage &&
-        !self.postsDataSource.updating) { // we are not loading
-        
-        [self.postsDataSource loadOneMorePage];
+    static const NSUInteger ITBCellBottomTriggerCount = 5;
+    if (([self.postsDataSource numberRowsInSection:0] > ITBCellBottomTriggerCount &&
+         indexPath.row >= ([self.postsDataSource numberRowsInSection:0] - ITBCellBottomTriggerCount)) ||
+        [self.postsDataSource numberRowsInSection:0] < ITBCellBottomTriggerCount) {
+        if (self.stream.couldLoadMore &&
+            !self.stream.loadingOneMorePage &&
+            !self.stream.updating) {
+            [self.stream loadOlder];
+        }
     }
 }
+
+#pragma mark - Fetch Posts
+
+- (void)_reloadStream {
+    [self.stream reloadData];
+    [self _showFeedsSavedLocally];
+}
+
+- (void)_showFeedsSavedLocally {
+    NSError *error = nil;
+    BOOL successfullyFetchedNewsFromDatabase = [self.fetchedResultsController performFetch:&error];
+    
+    if (successfullyFetchedNewsFromDatabase == NO) {
+        NSLog(@"Error occurred while fetching feeds from database: %@", error.localizedDescription);
+    }
+    
+    [self.tableView reloadData];
+}
+
+
 
 #pragma mark - UIScrollViewDelegate
 
@@ -288,7 +322,7 @@ static CGFloat ITBPostsEstimatedCellHeight = 60.f;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if (object == self.postsDataSource) {
+    if (object == self.stream) {
         if ([keyPath isEqualToString:ITBUpdatingKeyPath]) {
             NSNumber *newNumber = change[NSKeyValueChangeNewKey];
             SAFE_MAIN_THREAD_EXECUTION({
