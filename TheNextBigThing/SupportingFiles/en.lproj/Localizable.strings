@@ -6,6 +6,10 @@
   Copyright (c) 2014 IttyBitty. All rights reserved.
 */
 
+"common.ok" = "Ok";
 "common.yes" = "Yes";
 "common.no" = "No";
 "common.openUrlFormat" = "Open URL: %@";
+
+"common.noInternet.title" = "No internet connection";
+"common.noInternet.message" = "Please turn on WiFi or cellular network to get more posts";

@@ -16,6 +16,9 @@
 #import "ITBPost+Extension.h"
 #import "ITBStream.h"
 
+#import <UIAlertView+BlocksKit.h>
+#import "Reachability.h"
+
 
 static CGFloat ITBPostsEstimatedCellHeight = 60.f;
 static NSTimeInterval ITBResetFeedTimeInterval = 600; // 10 Minutes
@@ -37,6 +40,9 @@ static NSTimeInterval ITBResetFeedTimeInterval = 600; // 10 Minutes
 @property (nonatomic, strong) ITBStream *stream;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
+@property (nonatomic, strong) Reachability *reachability;
+@property (nonatomic, weak) UIAlertView *internetConnectionAlertView;
+
 @end
 
 @implementation ITBPostsViewController
@@ -48,6 +54,8 @@ static NSTimeInterval ITBResetFeedTimeInterval = 600; // 10 Minutes
         [self _createFetchedResultsController];
         
         _stream = [[ITBStream alloc] initWithStorage:[ITBStorageManager sharedInstance]];
+        
+        [self _applyReachability];
     }
     return self;
 }
@@ -73,13 +81,13 @@ static NSTimeInterval ITBResetFeedTimeInterval = 600; // 10 Minutes
                                                  name:UIApplicationDidBecomeActiveNotification object:nil];
     
     [self.stream addObserver:self
-                           forKeyPath:ITBUpdatingKeyPath
-                              options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-                              context:nil];
+                  forKeyPath:ITBUpdatingKeyPath
+                     options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+                     context:nil];
     [self.stream addObserver:self
-                           forKeyPath:ITBLoadingOneMoreKeyPath
-                              options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-                              context:nil];
+                  forKeyPath:ITBLoadingOneMoreKeyPath
+                     options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+                     context:nil];
     
     [self.tableView.refreshControl addTarget:self action:@selector(_refreshControlWantsUpdate:) forControlEvents:UIControlEventValueChanged];
     
@@ -113,6 +121,33 @@ static NSTimeInterval ITBResetFeedTimeInterval = 600; // 10 Minutes
 }
 
 #pragma mark - Private
+
+- (void)_showNoInternetAlertView {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:LOC(@"common.noInternet.title")
+                                                            message:LOC(@"common.noInternet.message")];
+        [alertView addButtonWithTitle:LOC(@"common.ok")];
+        self.internetConnectionAlertView = alertView;
+        [self.internetConnectionAlertView show];
+    });
+}
+
+- (void)_applyReachability {
+    self.reachability = [Reachability reachabilityForInternetConnection];
+    [self.reachability startNotifier];
+    weakify(self)
+    self.reachability.unreachableBlock = ^ (Reachability *reachability){
+        strongify(self)
+        if (!self.internetConnectionAlertView) {
+            [self _showNoInternetAlertView];
+        }
+    };
+    if (self.reachability.currentReachabilityStatus == NotReachable) {
+        if (!self.internetConnectionAlertView) {
+            [self _showNoInternetAlertView];
+        }
+    }
+}
 
 - (void)_applicationDidBecomeActive:(NSNotification *)note {
     if (self.backgroundEnteringDate) {
