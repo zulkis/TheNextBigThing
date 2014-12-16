@@ -42,6 +42,14 @@ static NSString *const DBFileName = @"storage.sqlite";
     return manager;
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        [self _prepareMainContexts];
+    }
+    return self;
+}
+
 - (NSPersistentStore *)persistentStore {
     return [_lazyLoadPersistentStoreCoordinator.persistentStores firstObject];
 }

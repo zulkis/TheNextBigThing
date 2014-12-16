@@ -40,6 +40,7 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
 - (instancetype)initWithStorage:(ITBStorageManager *)storage {
     self = [super init];
     if (self) {
+        _couldLoadMore = YES;
         _loadingPageSize = 20;
         _storageManager = storage;
         
@@ -107,15 +108,15 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
         return;
     }
 
-    [[self class] _clearLoadedEntitiesWithCompletion:^(NSError *error) {
+    [self _clearLoadedEntitiesWithCompletion:^(NSError *error) {
         [self loadNewer];
     }];
 }
 
 #pragma mark - Private
 
-+ (void)_clearLoadedEntitiesWithCompletion:(void(^)(NSError *error))completion {
-    [[ITBStorageManager sharedInstance] saveDataSerialWithPrivateContextSupport:^(NSManagedObjectContext *context) {
+- (void)_clearLoadedEntitiesWithCompletion:(void(^)(NSError *error))completion {
+    [self.storageManager saveDataSerialWithPrivateContextSupport:^(NSManagedObjectContext *context) {
         NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:[ITBPost entityName]];
         NSError *executeError = nil;
         NSArray *existedObjects = [context executeFetchRequest:fetchRequest error:&executeError];
@@ -123,7 +124,9 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
             [object.managedObjectContext deleteObject:object];
         }
     } completion:^(NSError *error) {
-        completion(error);
+        if (completion) {
+            completion(error);
+        }
     }];
 }
 

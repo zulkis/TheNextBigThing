@@ -95,6 +95,7 @@ static NSUInteger ITBMaximumPostsToReloadWithAnimation = 1000;
     
     [self.tableView.refreshControl addTarget:self action:@selector(_refreshControlWantsUpdate:) forControlEvents:UIControlEventValueChanged];
     
+    self.shouldUpdateWithAnimation = YES;
     [self _reloadStream];
 }
 
@@ -331,7 +332,6 @@ static NSUInteger ITBMaximumPostsToReloadWithAnimation = 1000;
     if (successfullyFetchedNewsFromDatabase == NO) {
         NSLog(@"Error occurred while fetching feeds from database: %@", error.localizedDescription);
     }
-    self.shouldUpdateWithAnimation = [self.fetchedResultsController fetchedObjects].count < ITBMaximumPostsToReloadWithAnimation;
     [self.tableView reloadData];
 }
 
@@ -461,7 +461,7 @@ static NSUInteger ITBMaximumPostsToReloadWithAnimation = 1000;
          */
         [self.tableView reloadData];
     }
-    if (!self.shouldUpdateWithAnimation) {
+    if (self.shouldUpdateWithAnimation) {
         self.shouldUpdateWithAnimation = [self.fetchedResultsController fetchedObjects].count < ITBMaximumPostsToReloadWithAnimation;
     }
 }
