@@ -59,12 +59,14 @@ NSString * const ITBLoadingOneMoreKeyPath = @"loadingOneMorePage";
     
     NSMutableDictionary *params = [NSMutableDictionary new];
     __block BOOL shouldUpdateCouldSaveFlag = YES;
+    
+    const NSInteger loadNewCount = 100;
     if (message) {
         shouldUpdateCouldSaveFlag = NO;
         params[@"since_id"] = message.identifier;
-        params[@"count"] = @(-self.loadingPageSize);
+        params[@"count"] = @(-loadNewCount);
     } else {
-        params[@"count"] = @(self.loadingPageSize);
+        params[@"count"] = @(loadNewCount);
     }
     weakify(self)
     [_fetcher getPostsWithParams:params
